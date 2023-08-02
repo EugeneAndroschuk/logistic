@@ -1,12 +1,16 @@
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Header from "./components/Header/Header";
+import StartPage from "./pages/StartPage";
+
+const routes = [
+  { path: "/header", element: <Header /> },
+  { path: "/", element: <StartPage /> },
+];
 
 function App() {
-
   return (
-    <div>
-      Logistic Hub
-    </div>
-  )
+    <RouterProvider router={createBrowserRouter(routes)} />
+  );
 }
 
-export default App
+export default App;
