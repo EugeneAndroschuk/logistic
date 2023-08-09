@@ -1,12 +1,14 @@
 
 import PropTypes from "prop-types";
+import getFormattedDate from "../../utils/dateFormatter";
 import { DriveWrap } from "./DriveItemShort.styled";
 
 const Drive = ({ drive }) => {
+  
     return (
       <DriveWrap>
-        <div>{drive.shipmentDate}</div>
-        <div>{drive.unloadingDate}</div>
+        <div>{getFormattedDate(drive.shipmentDate)}</div>
+        <div>{getFormattedDate(drive.unloadingDate)}</div>
         <div>{drive.carrier}</div>
         <div>{drive.client}</div>
         <div>{drive.departurePoint}</div>

@@ -1,16 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://db-phonebook-olo8.onrender.com';
+import { axiosPublic, axiosPrivate } from "../../utils/axiosConfig";
 
 // Utility to add JWT
 const setAuthToken = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  axiosPrivate.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 // Utility to remove JWT
 const clearAuthToken = () => {
-  axios.defaults.headers.common.Authorization = '';
+  axiosPrivate.defaults.headers.common.Authorization = "";
 };
 
 // USER operations
@@ -19,7 +17,7 @@ export const userRegister = createAsyncThunk(
   'auth/userRegister',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/api/users/register', credentials);
+      const response = await axiosPublic.post('/api/users/register', credentials);
       // setAuthToken(response.data.token);
       return response.data;
     } catch (error) {
@@ -32,7 +30,7 @@ export const userLogIn = createAsyncThunk(
   'auth/userLogIn',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/api/users/login', credentials);
+      const response = await axiosPublic.post('/api/users/login', credentials);
       setAuthToken(response.data.token);
       return response.data;
     } catch (error) {
@@ -45,7 +43,7 @@ export const userLogout = createAsyncThunk(
   'auth/userLogout',
   async (_, thunkAPI) => {
     try {
-      await axios.post('/api/users/logout');
+      await axiosPrivate.post("/api/users/logout");
       clearAuthToken();
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -62,8 +60,22 @@ export const userRefresh = createAsyncThunk(
 
     try {
       setAuthToken(localStorageToken);
-      const response = await axios.get('/api/users/current');
+      const response = await axiosPrivate.get("/api/users/current");
       return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const googleAuth = createAsyncThunk(
+  "auth/googleAuth",
+  async (accessToken, thunkAPI) => {
+    try {
+      setAuthToken(accessToken);
+      const { data } = await axiosPrivate.get("/api/users/current");
+
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

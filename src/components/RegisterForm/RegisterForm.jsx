@@ -11,13 +11,15 @@ const RegisterForm = () => {
     } = useForm();
     
     const onSubmitForm = (data) => {
+        const { name, email, password, role } = data;
         console.log(data);
-        dispatch(userRegister(data));
+        dispatch(userRegister({ name, email, password, role }));
     }
 
   return (
     <div>
-      <form onSubmit={handleSubmit((data)=>onSubmitForm(data))}>
+          <form onSubmit={handleSubmit((data) => onSubmitForm(data))}>
+              <h1>Register</h1>
         <ul>
           <li>
             <label>Name</label>

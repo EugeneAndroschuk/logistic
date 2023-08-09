@@ -1,5 +1,11 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { userRegister, userLogIn, userLogout, userRefresh } from "./authThunks";
+import {
+  userRegister,
+  userLogIn,
+  userLogout,
+  userRefresh,
+  googleAuth,
+} from "./authThunks";
 
 const initialState = {
   user: { name: null, email: null, role: null },
@@ -12,6 +18,11 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    setToken(state, action) {
+      state.token = action.payload.token;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(isAnyOf(userLogIn.rejected), (state, action) => {
@@ -20,6 +31,11 @@ const authSlice = createSlice({
       })
       .addMatcher(isAnyOf(userRegister.fulfilled), (state, action) => {
         state.user = action.payload.user;
+      })
+      .addMatcher(isAnyOf(googleAuth.fulfilled), (state, action) => {
+        state.isRefreshing = false;
+        state.user = { ...state.user, ...action.payload.user };
+        state.isLoggedIn = true;
       })
       .addMatcher(isAnyOf(userLogIn.fulfilled), (state, action) => {
         state.user = action.payload.user;
@@ -45,4 +61,6 @@ const authSlice = createSlice({
   },
 });
 
+
 export const authReducer = authSlice.reducer;
+export const { setToken } = authSlice.actions;

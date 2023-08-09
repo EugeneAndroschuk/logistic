@@ -12,6 +12,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import { authReducer } from "./auth/authSlice";
+import { drivesReducer } from "./drives/drivesSlice";
 
 const persistConfig = {
   key: "root",
@@ -24,6 +25,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    drives: drivesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
