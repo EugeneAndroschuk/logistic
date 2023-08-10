@@ -1,89 +1,135 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import PropTypes from "prop-types";
+import getFormattedDate from "../../utils/dateFormatter";
+import {
+  getAllDrivesSelector,
+  getUpdateSuccessfulSelector,
+} from "../../redux/drives/drivesSelectors";
+import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
+import { getDriveById, updateDrive } from "../../redux/drives/drivesThunks";
 
-const DriveItemForm = ({ drive }) => {
-    const [isEditEnabled, setIsEditEnabled] = useState(false);
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      defaultValues: {
-        shipmentDate: drive.shipmentDate,
-        unloadingDate: drive.unloadingDate,
-        carrier: drive.carrier,
-        client: drive.client,
-        departurePoint: drive.departurePoint,
-        arrivalPoint: drive.arrivalPoint,
-        vehicleData: drive.vehicleData,
-      },
-    });
+const DriveItemForm = () => {
+  const [isEditEnabled, setIsEditEnabled] = useState(false);
+  const [isFormSubmited, setIsFormSubmited] = useState(false);
+  const { driveId } = useParams();
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+  const drives = useSelector(getAllDrivesSelector);
+  const isUpdateSuccessful = useSelector(getUpdateSuccessfulSelector);
+  const isLoggedIn = useSelector(getUserIsLoggedIn);
+  const navigate = useNavigate();
 
-    return (
-      <div>
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
-          <ul>
-            <li>
-              <label>Shipment date</label>
-              <input
-                {...register("shipmentDate", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-            <li>
-              <label>Unloading date</label>
-              <input
-                {...register("unloadingDate", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-            <li>
-              <label>Carrier</label>
-              <input
-                {...register("carrier", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-            <li>
-              <label>Client</label>
-              <input
-                {...register("client", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-            <li>
-              <label>Departure point</label>
-              <input
-                {...register("departurePoint", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-            <li>
-              <label>Arrival point</label>
-              <input
-                {...register("arrivalPoint", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-            <li>
-              <label>Vehicle data</label>
-              <input
-                {...register("vehicleData", { required: true })}
-                disabled={!isEditEnabled}
-              />
-            </li>
-                </ul>
-                <button type="button" onClick={() => setIsEditEnabled((state) => (!state))}>{isEditEnabled ? "Save" : "Edit"}</button>
-                <button type="submit">Submit Form</button>
-        </form>
-      </div>
+  useEffect(() => {
+    if (isFormSubmited) navigate("/")
+  }, [isFormSubmited, navigate]);
+
+  useEffect(() => {
+    if (isLoggedIn) dispatch(getDriveById(driveId));
+  }, [dispatch, driveId, isLoggedIn]);
+
+  useEffect(() => {
+    if (drives[0]) {
+      setValue("shipmentDate", getFormattedDate(drives[0].shipmentDate));
+      setValue("unloadingDate", getFormattedDate(drives[0].unloadingDate));
+      setValue("carrier", drives[0].carrier);
+      setValue("client", drives[0].client);
+      setValue("departurePoint", drives[0].departurePoint);
+      setValue("arrivalPoint", drives[0].arrivalPoint);
+      setValue("vehicleData", drives[0].vehicleData);
+    }
+  }, [drives, setValue]);
+
+  const onFormSubmit = (data) => {
+    dispatch(
+      updateDrive({
+        driveId,
+        shipmentDate: data.shipmentDate,
+        unloadingDate: data.unloadingDate,
+        carrier: data.carrier,
+        client: data.client,
+        departurePoint: data.departurePoint,
+        arrivalPoint: data.arrivalPoint,
+        vehicleData: data.vehicleData,
+      })
     );
-}
+    setIsFormSubmited(true);
+  };
 
-DriveItemForm.propTypes = {
-  drive: PropTypes.object.isRequired,
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onFormSubmit)}>
+        <ul>
+          <li>
+            <label>Shipment date</label>
+            <input
+              {...register("shipmentDate", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+          <li>
+            <label>Unloading date</label>
+            <input
+              {...register("unloadingDate", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+          <li>
+            <label>Carrier</label>
+            <input
+              {...register("carrier", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+          <li>
+            <label>Client</label>
+            <input
+              {...register("client", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+          <li>
+            <label>Departure point</label>
+            <input
+              {...register("departurePoint", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+          <li>
+            <label>Arrival point</label>
+            <input
+              {...register("arrivalPoint", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+          <li>
+            <label>Vehicle data</label>
+            <input
+              {...register("vehicleData", { required: true })}
+              disabled={!isEditEnabled}
+            />
+          </li>
+        </ul>
+        <button
+          type="button"
+          onClick={() => setIsEditEnabled((state) => !state)}
+        >
+          {isEditEnabled ? "Save" : "Edit"}
+        </button>
+        <button type="submit">Submit Form</button>
+      </form>
+    </div>
+  );
 };
+
+// DriveItemForm.propTypes = {
+//   drive: PropTypes.object.isRequired,
+// };
 
 export default DriveItemForm;

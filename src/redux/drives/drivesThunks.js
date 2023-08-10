@@ -15,6 +15,18 @@ export const getAllDrives = createAsyncThunk(
   }
 );
 
+export const getDriveById = createAsyncThunk(
+  "drives/getDriveById",
+  async (driveId, thunkAPI) => {
+    try {
+      const response = await axiosPrivate.get(`/api/drives/${driveId}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
 export const addDrive = createAsyncThunk(
   "drives/addDrive",
   async (credentials, thunkAPI) => {
@@ -31,7 +43,7 @@ export const deleteDrive = createAsyncThunk(
   "drives/deleteDrive",
   async (driveId, thunkAPI) => {
     try {
-      const response = await axiosPrivate.delete(`/api/contacts/${driveId}`);
+      const response = await axiosPrivate.delete(`/api/drives/${driveId}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -44,7 +56,7 @@ export const updateDrive = createAsyncThunk(
   async ({driveId, ...credentials}, thunkAPI) => {
     try {
       const response = await axiosPrivate.put(
-        `/api/contacts/${driveId}`,
+        `/api/drives/${driveId}`,
         credentials
       );
       return response.data;

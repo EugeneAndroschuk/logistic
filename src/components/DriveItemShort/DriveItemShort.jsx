@@ -14,6 +14,7 @@ const Drive = ({ drive }) => {
         <div>{drive.departurePoint}</div>
         <div>{drive.arrivalPoint}</div>
         <div>{drive.vehicleData}</div>
+        <div>{drive.owner.name}</div>
       </DriveWrap>
     );
 }

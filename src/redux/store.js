@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 import { authReducer } from "./auth/authSlice";
 import { drivesReducer } from "./drives/drivesSlice";
+import handleMiddleware from "../utils/handleMiddleware";
 
 const persistConfig = {
   key: "root",
@@ -32,7 +33,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(handleMiddleware),
 });
 
 export const persistor = persistStore(store);
