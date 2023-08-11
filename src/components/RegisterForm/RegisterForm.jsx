@@ -1,6 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { userRegister } from "../../redux/auth/authThunks";
+import {
+  FormWrap,
+  FormStyled,
+  FormTitleStyled,
+  InpuStyled,
+  ListStyled,
+  ItemStyled,
+  SubmitBtnStyled,
+  GoogleBtn,
+  GoogleIcon,
+  TextStyled,
+  LinkStyled,
+} from "./RegisterForm.styled";
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
@@ -17,49 +31,57 @@ const RegisterForm = () => {
     }
 
   return (
-    <div>
-          <form onSubmit={handleSubmit((data) => onSubmitForm(data))}>
-              <h1>Register</h1>
-        <ul>
-          <li>
+    <FormWrap>
+      <FormStyled onSubmit={handleSubmit((data) => onSubmitForm(data))}>
+        <FormTitleStyled>Registration</FormTitleStyled>
+        <ListStyled>
+          <ItemStyled>
             <label>Name</label>
-            <input
+            <InpuStyled
               {...register("name", { required: true })}
               placeholder={"Name"}
             />
-          </li>
-          <li>
+          </ItemStyled>
+          <ItemStyled>
             <label>Email</label>
-            <input
+            <InpuStyled
               {...register("email", { required: true })}
               placeholder={"Email"}
             />
-          </li>
-          <li>
+          </ItemStyled>
+          <ItemStyled>
             <label>Password</label>
-            <input
+            <InpuStyled
               {...register("password", { required: true })}
               placeholder={"Password"}
             />
-          </li>
-          <li>
+          </ItemStyled>
+          <ItemStyled>
             <label>Confirm password</label>
-            <input
+            <InpuStyled
               {...register("confirmPassword", { required: true })}
               placeholder={"Confirm password"}
             />
-          </li>
-          <li>
+          </ItemStyled>
+          <ItemStyled>
             <label>Role</label>
             <select {...register("role", { required: true })}>
               <option value="accountant">accountant</option>
               <option value="manager">manager</option>
             </select>
-          </li>
-        </ul>
-        <button type="submit">Register</button>
-      </form>
-    </div>
+          </ItemStyled>
+        </ListStyled>
+        <SubmitBtnStyled type="submit">Register</SubmitBtnStyled>
+        <GoogleBtn href="https://logistics-db.onrender.com/api/users/google">
+          <GoogleIcon></GoogleIcon>
+          Sign In with Google
+        </GoogleBtn>
+        <TextStyled>
+          Already have an account ?
+          <LinkStyled to="/auth/login">Login</LinkStyled>
+        </TextStyled>
+      </FormStyled>
+    </FormWrap>
   );
 };
 

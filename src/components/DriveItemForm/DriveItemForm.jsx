@@ -7,8 +7,10 @@ import {
   getAllDrivesSelector,
   getUpdateSuccessfulSelector,
 } from "../../redux/drives/drivesSelectors";
+import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import { getDriveById, updateDrive } from "../../redux/drives/drivesThunks";
+import getDateFromString from "../../utils/getDateFromString";
 
 const DriveItemForm = () => {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
@@ -27,8 +29,9 @@ const DriveItemForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isFormSubmited) navigate("/")
-  }, [isFormSubmited, navigate]);
+    if (isUpdateSuccessful) {navigate("/");
+    dispatch(setUpdateSuccessful(false));}
+  }, [dispatch, isUpdateSuccessful, navigate]);
 
   useEffect(() => {
     if (isLoggedIn) dispatch(getDriveById(driveId));
@@ -50,8 +53,8 @@ const DriveItemForm = () => {
     dispatch(
       updateDrive({
         driveId,
-        shipmentDate: data.shipmentDate,
-        unloadingDate: data.unloadingDate,
+        shipmentDate: getDateFromString(data.shipmentDate),
+        unloadingDate: getDateFromString(data.unloadingDate),
         carrier: data.carrier,
         client: data.client,
         departurePoint: data.departurePoint,

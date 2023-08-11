@@ -18,21 +18,24 @@ const initialState = {
 export const drivesSlice = createSlice({
   name: "drives",
   initialState,
-  reducers: {},
+  reducers: {
+    setUpdateSuccessful: (state, action) => {
+      state.updateSuccessful = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
         isAnyOf(
           getAllDrives.pending,
           getDriveById.pending,
-          addDrive.pending,
           deleteDrive.pending
         ),
         (state) => {
           state.isLoading = true;
         }
       )
-      .addMatcher(isAnyOf(updateDrive.pending), (state) => {
+      .addMatcher(isAnyOf(updateDrive.pending, addDrive.pending), (state) => {
         state.isLoading = true;
         state.updateSuccessful = false;
       })
@@ -40,8 +43,7 @@ export const drivesSlice = createSlice({
         isAnyOf(
           getAllDrives.rejected,
           getDriveById.rejected,
-          addDrive.rejected,
-          deleteDrive.rejected,
+          deleteDrive.rejected
         ),
         (state, action) => {
           state.isLoading = false;
@@ -49,9 +51,7 @@ export const drivesSlice = createSlice({
         }
       )
       .addMatcher(
-        isAnyOf(
-          updateDrive.rejected
-        ),
+        isAnyOf(updateDrive.rejected, addDrive.rejected),
         (state, action) => {
           state.isLoading = false;
           state.updateSuccessful = false;
@@ -70,6 +70,7 @@ export const drivesSlice = createSlice({
       })
       .addMatcher(isAnyOf(addDrive.fulfilled), (state, action) => {
         state.isLoading = false;
+        state.updateSuccessful = true;
         state.error = null;
         state.items.push(action.payload);
       })
@@ -99,3 +100,4 @@ export const drivesSlice = createSlice({
 });
 
 export const drivesReducer = drivesSlice.reducer;
+export const { setUpdateSuccessful } = drivesSlice.actions;

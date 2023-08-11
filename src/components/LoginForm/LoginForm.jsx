@@ -1,6 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { userLogIn } from "../../redux/auth/authThunks";
+import {
+  FormWrap,
+  FormStyled,
+  FormTitleStyled,
+  InpuStyled,
+  ListStyled,
+  ItemStyled,
+  SubmitBtnStyled,
+  GoogleBtn,
+  GoogleIcon,
+  TextStyled,
+  LinkStyled,
+} from "./LoginForm.styled";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -16,35 +30,43 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit((data) => onSubmitForm(data))}>
-        <h1>Login</h1>
-        <ul>
-          <li>
+    <FormWrap>
+      <FormStyled onSubmit={handleSubmit((data) => onSubmitForm(data))}>
+        <FormTitleStyled>Login</FormTitleStyled>
+        <ListStyled>
+          <ItemStyled>
             <label>Email</label>
-            <input
+            <InpuStyled
               {...register("email", { required: true })}
               placeholder={"Email"}
             />
-          </li>
-          <li>
+          </ItemStyled>
+          <ItemStyled>
             <label>Password</label>
-            <input
+            <InpuStyled
               {...register("password", { required: true })}
               placeholder={"Password"}
             />
-          </li>
-          <li>
+          </ItemStyled>
+          <ItemStyled>
             <label>Confirm password</label>
-            <input
+            <InpuStyled
               {...register("confirmPassword", { required: true })}
               placeholder={"Confirm password"}
             />
-          </li>
-        </ul>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+          </ItemStyled>
+        </ListStyled>
+        <SubmitBtnStyled type="submit">Login</SubmitBtnStyled>
+        <GoogleBtn href="https://logistics-db.onrender.com/api/users/google">
+          <GoogleIcon></GoogleIcon>
+          Sign In with Google
+        </GoogleBtn>
+        <TextStyled>
+          Already have an account ?
+          <LinkStyled to="/auth/register">Register</LinkStyled>
+        </TextStyled>
+      </FormStyled>
+    </FormWrap>
   );
 };
 

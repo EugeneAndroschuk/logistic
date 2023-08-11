@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -6,6 +7,8 @@ import { googleAuth } from "../../redux/auth/authThunks";
 import { setToken } from "../../redux/auth/authSlice";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import LoginForm from "../../components/LoginForm/LoginForm";
+import Container from "../../styles/Container";
+import { AuthPageWrap } from "./AuthPage.styled";
 
 const AuthPage = () => {
   const [searchParams] = useSearchParams();
@@ -26,21 +29,18 @@ const AuthPage = () => {
   }, [dispatch, token]);
 
   return (
-    <>
-      <h1>Authorization Page</h1>
-      <Link to="/">go to Main page</Link>
-      <RegisterForm />
-      <LoginForm />
-      <button type="button" onClick={() => console.log()}>
-        GOOGLE SIGN IN
-      </button>
-      <button type="button" onClick={() => console.log()}>
-        GOOGLE LOG OUT
-      </button>
-      <a href="https://logistics-db.onrender.com/api/users/google">
-        Continue with Google
-      </a>
-    </>
+    <AuthPageWrap>
+      {/* <Container> */}
+        <Link to="/">go to Main page</Link>
+        {/* <RegisterForm />
+      <LoginForm /> */}
+        {/* <GoogleBtn href="https://logistics-db.onrender.com/api/users/google">
+          <GoogleIcon></GoogleIcon>
+          Sign In with Google
+        </GoogleBtn> */}
+        <Outlet />
+      {/* </Container> */}
+    </AuthPageWrap>
   );
 };
 
