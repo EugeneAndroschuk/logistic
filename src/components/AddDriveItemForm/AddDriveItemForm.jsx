@@ -28,7 +28,6 @@ const AddDriveItemForm = () => {
   }, [dispatch, isUpdateSuccessful, navigate]);
 
   const onFormSubmit = (data) => {
-    console.log(data)
     // console.log({
     //   ...data,
     //   shipmentDate: getDateFromString(data.shipmentDate),

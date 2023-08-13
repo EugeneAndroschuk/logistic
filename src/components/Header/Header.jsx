@@ -1,12 +1,17 @@
 
 import Container from "../../styles/Container";
 import Logo from "../Logo/Logo";
+import User from "../User/User";
+import { MenuWrap } from "./Header.styled";
 
 const Header = () => {
     return (
       <>
         <Container>
-          <Logo />
+          <MenuWrap>
+            <Logo />
+            <User />
+          </MenuWrap>
         </Container>
       </>
     );

@@ -6,7 +6,7 @@ import {getAllDrives} from "../../redux/drives/drivesThunks"
 import { getAllDrivesSelector } from "../../redux/drives/drivesSelectors";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import Drive from "../DriveItemShort/DriveItemShort";
-import { DriveItemShortWrap } from "./DriveList.styled";
+import { DriveListWrap, DriveItemShortWrap } from "./DriveList.styled";
 
 
 const DriveList = () => {
@@ -19,15 +19,15 @@ const DriveList = () => {
   },[dispatch, isLoggedIn]);
 
   return (
-    <div>
-      {allDrives.map((drive) => (
-        <DriveItemShortWrap key={drive._id}>
-          <Link to={`/drives/${drive._id}`}>
+    <DriveListWrap>
+      <ul>
+        {allDrives.map((drive) => (
+          <DriveItemShortWrap key={drive._id}>
             <Drive drive={drive} />
-          </Link>
-        </DriveItemShortWrap>
-      ))}
-    </div>
+          </DriveItemShortWrap>
+        ))}
+      </ul>
+    </DriveListWrap>
   );
 };
 

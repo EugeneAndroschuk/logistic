@@ -77,6 +77,7 @@ export const drivesSlice = createSlice({
       .addMatcher(isAnyOf(deleteDrive.fulfilled), (state, action) => {
         state.isLoading = false;
         state.error = null;
+        console.log(action.payload);
         const index = state.items.findIndex(
           (drive) => drive._id === action.payload._id
         );

@@ -4,7 +4,7 @@ import img from "../../../assets/images/auth-bgd2.jpg";
 export const SharedLayoutWrap = styled.div`
   width: 100%;
   height: 100%;
-  overflow: hidden;
+
   background-image: linear-gradient(
       to right,
       rgba(255, 255, 255, 0.8),
