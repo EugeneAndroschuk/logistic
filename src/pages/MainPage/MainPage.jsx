@@ -8,6 +8,7 @@ import FiltersMenu from "../../components/FiltersMenu/FiltersMenu";
 import Overlay from "../../components/Overlay/Overlay";
 import {
   MainPageWrap,
+  DriveListWrap,
   AddDriveBtn,
   FilterMenuBtn,
   MenuWrap,
@@ -22,29 +23,31 @@ const MainPage = () => {
   }
     return (
       <MainPageWrap>
-        <Container>
-          <DriveList />
-          <AddDriveBtn to="/adddrive">ADD DRIVE</AddDriveBtn>
-          <FilterMenuBtn type="button" onClick={toggleModal}>
-            FILTERS
-          </FilterMenuBtn>
+        <DriveListWrap>
+          <Container>
+            <DriveList />
+            <AddDriveBtn to="/adddrive">ADD DRIVE</AddDriveBtn>
+            <FilterMenuBtn type="button" onClick={toggleModal}>
+              FILTERS
+            </FilterMenuBtn>
 
-          {isMenuOpen && <Overlay toggleModal={toggleModal} />}
+            {isMenuOpen && <Overlay toggleModal={toggleModal} />}
 
-          <CSSTransition
-            nodeRef={nodeRef}
-            in={isMenuOpen}
-            classNames="fade"
-            timeout={250}
-            unmountOnExit
-          >
-            <MenuWrap ref={nodeRef}>
-              <FiltersMenu toggleModal={toggleModal} />
-            </MenuWrap>
-          </CSSTransition>
+            <CSSTransition
+              nodeRef={nodeRef}
+              in={isMenuOpen}
+              classNames="fade"
+              timeout={250}
+              unmountOnExit
+            >
+              <MenuWrap ref={nodeRef}>
+                <FiltersMenu toggleModal={toggleModal} />
+              </MenuWrap>
+            </CSSTransition>
 
-          {/* {isMenuOpen && <FiltersMenu toggleModal={toggleModal} />} */}
-        </Container>
+            {/* {isMenuOpen && <FiltersMenu toggleModal={toggleModal} />} */}
+          </Container>
+        </DriveListWrap>
       </MainPageWrap>
     );
 }

@@ -15,6 +15,18 @@ export const getAllDrives = createAsyncThunk(
   }
 );
 
+export const getDrivesByQuery = createAsyncThunk(
+  "drives/getDrivesByQuery",
+  async (querySearch, thunkAPI) => {
+    try {
+      const response = await axiosPrivate.get(`/api/drives?${querySearch}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
 export const getDriveById = createAsyncThunk(
   "drives/getDriveById",
   async (driveId, thunkAPI) => {

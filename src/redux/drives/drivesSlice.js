@@ -1,6 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   getAllDrives,
+  getDrivesByQuery,
   getDriveById,
   addDrive,
   deleteDrive,
@@ -28,6 +29,7 @@ export const drivesSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getAllDrives.pending,
+          getDrivesByQuery.pending,
           getDriveById.pending,
           deleteDrive.pending
         ),
@@ -42,6 +44,7 @@ export const drivesSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getAllDrives.rejected,
+          getDrivesByQuery.rejected,
           getDriveById.rejected,
           deleteDrive.rejected
         ),
@@ -58,11 +61,14 @@ export const drivesSlice = createSlice({
           state.error = action.payload;
         }
       )
-      .addMatcher(isAnyOf(getAllDrives.fulfilled), (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.items = action.payload;
-      })
+      .addMatcher(
+        isAnyOf(getAllDrives.fulfilled, getDrivesByQuery.fulfilled),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = null;
+          state.items = action.payload;
+        }
+      )
       .addMatcher(isAnyOf(getDriveById.fulfilled), (state, action) => {
         state.isLoading = false;
         state.error = null;

@@ -5,9 +5,15 @@ export const MainPageWrap = styled.div`
   height: 100%;
 `;
 
+export const DriveListWrap = styled.div`
+  height: 600px;
+  padding: 0px 16px;
+  overflow-y: scroll;
+`;
+
 export const AddDriveBtn = styled(Link)`
   position: absolute;
-  right: 20px;
+  right: 30px;
   bottom: 150px;
 
   display: flex;
@@ -28,7 +34,7 @@ export const AddDriveBtn = styled(Link)`
 
 export const FilterMenuBtn = styled.button`
   position: absolute;
-  right: 20px;
+  right: 30px;
   bottom: 260px;
 
   width: 100px;
