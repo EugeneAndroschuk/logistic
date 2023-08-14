@@ -7,7 +7,7 @@ import {
 } from "../../redux/drives/drivesSelectors";
 import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { addDrive } from "../../redux/drives/drivesThunks";
-import getDateFromString from "../../utils/getDateFromString";
+import { setDateForBackend } from "../../utils/dateFormatter";
 
 const AddDriveItemForm = () => {
   const dispatch = useDispatch();
@@ -28,16 +28,14 @@ const AddDriveItemForm = () => {
   }, [dispatch, isUpdateSuccessful, navigate]);
 
   const onFormSubmit = (data) => {
-    // console.log({
-    //   ...data,
-    //   shipmentDate: getDateFromString(data.shipmentDate),
-    //   unloadingDate: getDateFromString(data.unloadingDate),
-    // });
+    // console.log(data.shipmentDate);
+    // console.log(getDateFromString(data.shipmentDate));
+   
     dispatch(
       addDrive({
         ...data,
-        shipmentDate: getDateFromString(data.shipmentDate),
-        unloadingDate: getDateFromString(data.unloadingDate),
+        shipmentDate: setDateForBackend(data.shipmentDate),
+        unloadingDate: setDateForBackend(data.unloadingDate),
       })
     );
   };

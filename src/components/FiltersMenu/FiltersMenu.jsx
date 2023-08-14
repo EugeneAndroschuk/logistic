@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDrivesByQuery } from "../../redux/drives/drivesThunks";
+import { setDateForQuerySearch } from "../../utils/dateFormatter";
 import PropTypes from "prop-types";
 import closeSvg from "../../assets/icons/close-outline.svg";
 import { CSSTransition } from "react-transition-group";
@@ -22,13 +23,13 @@ const FiltersMenu = ({ toggleModal }) => {
     const querySearch = str.concat(
       "dateFrom",
       "=",
-      dayjs(dateFrom).toString(),
+      setDateForQuerySearch(dateFrom),
       "&",
       "dateTill",
       "=",
-      dayjs(dateTill).toString()
+      setDateForQuerySearch(dateTill)
     ); 
-    console.log(querySearch);
+    
 
     dispatch(getDrivesByQuery(querySearch));
   }

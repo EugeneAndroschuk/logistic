@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import getFormattedDate from "../../utils/dateFormatter";
+import { getDateFromUtc, setDateForBackend } from "../../utils/dateFormatter";
 import {
   getAllDrivesSelector,
   getUpdateSuccessfulSelector,
@@ -10,7 +10,6 @@ import {
 import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import { getDriveById, updateDrive } from "../../redux/drives/drivesThunks";
-import getDateFromString from "../../utils/getDateFromString";
 
 const DriveItemForm = () => {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
@@ -39,8 +38,8 @@ const DriveItemForm = () => {
 
   useEffect(() => {
     if (drives[0]) {
-      setValue("shipmentDate", getFormattedDate(drives[0].shipmentDate));
-      setValue("unloadingDate", getFormattedDate(drives[0].unloadingDate));
+      setValue("shipmentDate", getDateFromUtc(drives[0].shipmentDate));
+      setValue("unloadingDate", getDateFromUtc(drives[0].unloadingDate));
       setValue("carrier", drives[0].carrier);
       setValue("client", drives[0].client);
       setValue("departurePoint", drives[0].departurePoint);
@@ -53,8 +52,8 @@ const DriveItemForm = () => {
     dispatch(
       updateDrive({
         driveId,
-        shipmentDate: getDateFromString(data.shipmentDate),
-        unloadingDate: getDateFromString(data.unloadingDate),
+        shipmentDate: setDateForBackend(data.shipmentDate),
+        unloadingDate: setDateForBackend(data.unloadingDate),
         carrier: data.carrier,
         client: data.client,
         departurePoint: data.departurePoint,
