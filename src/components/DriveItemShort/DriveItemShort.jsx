@@ -1,8 +1,17 @@
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
+import deleteImg from "../../assets/icons/delete-png.png";
 import { deleteDrive } from "../../redux/drives/drivesThunks";
 import { getDateFromUtc } from "../../utils/dateFormatter";
-import { DriveWrap, DriveLinkWrap, DeleteBtn } from "./DriveItemShort.styled";
+import {
+  DriveWrap,
+  DriveLinkWrap,
+  DriveList,
+  DriveItem,
+  DriveName,
+  DropMenu,
+  DeleteBtn,
+} from "./DriveItemShort.styled";
 
 const Drive = ({ drive }) => {
   const dispatch = useDispatch();
@@ -14,18 +23,36 @@ const Drive = ({ drive }) => {
   return (
     <DriveWrap>
       <DriveLinkWrap to={`/drives/${drive._id}`}>
-        <div>{getDateFromUtc(drive.shipmentDate)}</div>
-        <div>{getDateFromUtc(drive.unloadingDate)}</div>
-        <div>{drive.carrier}</div>
-        <div>{drive.client}</div>
-        <div>{drive.departurePoint}</div>
-        <div>{drive.arrivalPoint}</div>
-        <div>{drive.vehicleData}</div>
-        <div>{drive.owner.name}</div>
+        <DriveList>
+          <DriveItem>
+            <DriveName>{getDateFromUtc(drive.shipmentDate)}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{getDateFromUtc(drive.unloadingDate)}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{drive.carrier}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{drive.client}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{drive.departurePoint}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{drive.arrivalPoint}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{drive.vehicleData}</DriveName>
+          </DriveItem>
+          <DriveItem>
+            <DriveName>{drive.owner.name}</DriveName>
+          </DriveItem>
+        </DriveList>
       </DriveLinkWrap>
-      <DeleteBtn type="button" onClick={onPressDelete}>
-        ==DELETE==
-      </DeleteBtn>
+      <DropMenu>
+        <DeleteBtn src={deleteImg} onClick={onPressDelete}/>
+      </DropMenu>
     </DriveWrap>
   );
 };

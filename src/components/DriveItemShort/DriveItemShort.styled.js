@@ -2,20 +2,63 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const DriveWrap = styled.div`
-display: flex;
-justify-content: space-between;
-gap: 8px;
+position: relative;
+overflow: hidden;
+// display: flex;
+// justify-content: space-between;
+// gap: 8px;
 `;
 
 export const DriveLinkWrap = styled(Link)`
-  display: flex;
-  gap: 16px;
-  width: 1300px;
-  &:hover,
-  &:focus {
+
+  :hover,
+  :focus {
     cursor: pointer;
-    background-color: grey;
+    background-color: rgba(255,255,255,0.8);
   }
 `;
 
-export const DeleteBtn = styled.button``;
+export const DriveList = styled.ul`
+display: flex;
+`;
+
+export const DriveItem = styled.li`
+  text-align: center;
+  border-right: 1px solid grey;
+`;
+
+export const DriveName = styled.p`
+  width: 156px;
+  padding: 5px 0px;
+  background-color: inherit;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const DropMenu = styled.div`
+  position: absolute;
+  top: 0;
+  right: -90px;
+
+  width: 100px;
+  padding: 0px 12px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateX(-90px);
+  }
+`;
+
+export const DeleteBtn = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  &:hover, &:focus {
+    scale: 1.2;
+  }
+`;

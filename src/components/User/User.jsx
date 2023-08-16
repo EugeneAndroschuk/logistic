@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getUserName } from "../../redux/auth/authSelectors";
 import { userLogout } from "../../redux/auth/authThunks";
+import { UserWrap, UserName, LogoutBtn } from "./User.styled";
 
 const User = () => {
     const dispatch = useDispatch();
@@ -12,10 +13,12 @@ const User = () => {
     }
 
     return (
-      <div>
-            <div>{currentUser}</div>
-            <button type="button" onClick={onPressLogout}>Logout</button>
-      </div>
+      <UserWrap>
+        <UserName>{currentUser}</UserName>
+        <LogoutBtn type="button" onClick={onPressLogout}>
+          Logout
+        </LogoutBtn>
+      </UserWrap>
     );
 }
 

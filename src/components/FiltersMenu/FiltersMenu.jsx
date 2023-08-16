@@ -1,38 +1,55 @@
 
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDrivesSelector } from "../../redux/drives/drivesSelectors";
 import { getDrivesByQuery } from "../../redux/drives/drivesThunks";
 import { setDateForQuerySearch } from "../../utils/dateFormatter";
+import makeUniqUsers from "../../utils/makeUniqUsers";
 import PropTypes from "prop-types";
 import closeSvg from "../../assets/icons/close-outline.svg";
-import { CSSTransition } from "react-transition-group";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/uk";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {MenuItem, Select} from "@mui/material";
 import { FiltersMenuWrap, CloseBtn, DateWrap } from "./FiltersMenu.styled";
 
 const FiltersMenu = ({ toggleModal }) => {
   const [dateFrom, setDateFrom] = useState(dayjs(new Date()));
   const [dateTill, setDateTill] = useState(dayjs(new Date()));
+  const [user, setUser] = useState("");
   const dispatch = useDispatch();
+  const allDrives = useSelector(getAllDrivesSelector);
+  const owners = allDrives.map((drive) => drive.owner);
+  const uniqOwners = makeUniqUsers(owners);
   
   const onApplyFilters = () => {
-    let str = "";
-    const querySearch = str.concat(
-      "dateFrom",
-      "=",
-      setDateForQuerySearch(dateFrom),
-      "&",
-      "dateTill",
-      "=",
-      setDateForQuerySearch(dateTill)
-    ); 
+    let searchId;
+    if (user !== "") {
+      const { _id } = uniqOwners.find(owner => owner.name === user);
+      searchId = `&id=${_id}`;
+    }
     
-
-    dispatch(getDrivesByQuery(querySearch));
+    let str = "";
+    let querySearch = str.concat(
+      "dateFrom=",
+      setDateForQuerySearch(dateFrom),
+      "&dateTill=",
+      setDateForQuerySearch(dateTill),
+    );
+    if (searchId) querySearch = querySearch.concat(searchId);
+    
+      dispatch(getDrivesByQuery(querySearch));
   }
+
+  useEffect(() => {
+    console.log('selected user ==> ', user)
+  },[user]);
+
+  const handleChange = (event) => {
+    setUser(event.target.value);
+  };
 
     return (
       <FiltersMenuWrap>
@@ -58,7 +75,22 @@ const FiltersMenu = ({ toggleModal }) => {
               slotProps={{ textField: { size: "small" } }}
             />
           </DateWrap>
-          <button type="button" onClick={onApplyFilters}>Apply filter</button>
+          <p>Choose user</p>
+          <Select
+            value={user}
+            onChange={handleChange}
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            <MenuItem value="">
+              <em>All users</em>
+            </MenuItem>
+            {uniqOwners.map(owner => <MenuItem value={owner.name} key={owner._id}>{owner.name}</MenuItem>)}
+          </Select>
+  
+          <button type="button" onClick={onApplyFilters}>
+            Apply filter
+          </button>
         </LocalizationProvider>
       </FiltersMenuWrap>
     );

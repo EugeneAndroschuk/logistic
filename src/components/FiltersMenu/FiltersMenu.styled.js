@@ -5,7 +5,7 @@ export const FiltersMenuWrap = styled.div`
   //   top: 0;
   //   right: 0;
 
-  width: 800px;
+  width: 450px;
   height: 100vh;
 
   padding:16px;

@@ -1,12 +1,18 @@
 
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {getAllDrives} from "../../redux/drives/drivesThunks"
 import { getAllDrivesSelector } from "../../redux/drives/drivesSelectors";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import Drive from "../DriveItemShort/DriveItemShort";
-import { DriveListWrap, DriveItemShortWrap } from "./DriveList.styled";
+import {
+  DriveListWrap,
+  DriveListHeader,
+  HeaderItem,
+  HeaderItemName,
+  DriveListBody,
+  DriveItemShortWrap,
+} from "./DriveList.styled";
 
 
 const DriveList = () => {
@@ -20,13 +26,39 @@ const DriveList = () => {
 
   return (
     <DriveListWrap>
-      <ul>
+      <DriveListHeader>
+        <HeaderItem>
+          <HeaderItemName>Shipment date</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>Unloading date</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>Carrier</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>Client</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>Departure point</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>Arrival point</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>Vehicle data</HeaderItemName>
+        </HeaderItem>
+        <HeaderItem>
+          <HeaderItemName>User</HeaderItemName>
+        </HeaderItem>
+      </DriveListHeader>
+      <DriveListBody>
         {allDrives.map((drive) => (
           <DriveItemShortWrap key={drive._id}>
             <Drive drive={drive} />
           </DriveItemShortWrap>
         ))}
-      </ul>
+      </DriveListBody>
     </DriveListWrap>
   );
 };
