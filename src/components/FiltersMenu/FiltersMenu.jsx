@@ -15,12 +15,13 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {MenuItem, Select} from "@mui/material";
 import { FiltersMenuWrap, CloseBtn, DateWrap } from "./FiltersMenu.styled";
 
-const FiltersMenu = ({ toggleModal }) => {
+const FiltersMenu = ({ toggleModal, onSetQuery }) => {
   const [dateFrom, setDateFrom] = useState(dayjs(new Date()));
   const [dateTill, setDateTill] = useState(dayjs(new Date()));
   const [user, setUser] = useState("");
+  const [queryString, setQueryString] = useState(null);
   const dispatch = useDispatch();
-  const allDrives = useSelector(getAllDrivesSelector);
+  const {allDrives} = useSelector(getAllDrivesSelector);
   const owners = allDrives.map((drive) => drive.owner);
   const uniqOwners = makeUniqUsers(owners);
   
@@ -28,7 +29,7 @@ const FiltersMenu = ({ toggleModal }) => {
     let searchId;
     if (user !== "") {
       const { _id } = uniqOwners.find(owner => owner.name === user);
-      searchId = `&id=${_id}`;
+      searchId = `&userId=${_id}`;
     }
     
     let str = "";
@@ -40,12 +41,14 @@ const FiltersMenu = ({ toggleModal }) => {
     );
     if (searchId) querySearch = querySearch.concat(searchId);
     
-      dispatch(getDrivesByQuery(querySearch));
+      // dispatch(getDrivesByQuery(querySearch));
+    // setQueryString(querySearch);
+    onSetQuery(querySearch);
   }
 
-  useEffect(() => {
-    console.log('selected user ==> ', user)
-  },[user]);
+  // useEffect(() => {
+  //   console.log('selected user ==> ', user)
+  // },[user]);
 
   const handleChange = (event) => {
     setUser(event.target.value);
@@ -98,6 +101,7 @@ const FiltersMenu = ({ toggleModal }) => {
 
 FiltersMenu.propTypes = {
   toggleModal: PropTypes.func.isRequired,
+  onSetQuery: PropTypes.func.isRequired,
 };
 
 export default FiltersMenu;

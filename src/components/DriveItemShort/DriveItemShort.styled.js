@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 export const DriveWrap = styled.div`
 position: relative;
 overflow: hidden;
-// display: flex;
-// justify-content: space-between;
-// gap: 8px;
 `;
 
 export const DriveLinkWrap = styled(Link)`
+  color: white;
 
   :hover,
   :focus {
     cursor: pointer;
-    background-color: rgba(255,255,255,0.8);
+    font-weight: 700;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.8);
   }
 `;
 
@@ -30,10 +30,15 @@ export const DriveItem = styled.li`
 export const DriveName = styled.p`
   width: 156px;
   padding: 5px 0px;
-  background-color: inherit;
-  color: black;
+
+  //color: white;
   font-size: 16px;
-  font-weight: 500;
+
+  &:hover,
+  &:focus {
+    // color: black;
+    
+  }
 `;
 
 export const DropMenu = styled.div`

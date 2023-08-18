@@ -1,6 +1,5 @@
 
-import { Link } from "react-router-dom";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import DriveList from "../../components/DriveList/DriveList";
 import Container from "../../styles/Container";
@@ -20,6 +19,10 @@ const MainPage = () => {
 
   const toggleModal = () => {
     setIsMenuOpen(!isMenuOpen);
+  }
+
+  const onSetQuery = (str) => {
+    console.log(str);
   }
     return (
       <MainPageWrap>
@@ -41,7 +44,10 @@ const MainPage = () => {
               unmountOnExit
             >
               <MenuWrap ref={nodeRef}>
-                <FiltersMenu toggleModal={toggleModal} />
+                <FiltersMenu
+                  toggleModal={toggleModal}
+                  onSetQuery={onSetQuery}
+                />
               </MenuWrap>
             </CSSTransition>
 

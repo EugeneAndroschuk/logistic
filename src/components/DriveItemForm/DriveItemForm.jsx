@@ -10,6 +10,17 @@ import {
 import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import { getDriveById, updateDrive } from "../../redux/drives/drivesThunks";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import {
+  FormWrap,
+  FormName,
+  FormItem,
+  Label,
+  Input,
+  SubmitFormBtn,
+  EditBtnWrap,
+  EditBtn,
+} from "./DriveItemForm.styled";
 
 const DriveItemForm = () => {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
@@ -65,68 +76,82 @@ const DriveItemForm = () => {
   };
 
   return (
-    <div>
+    <FormWrap>
+      <FormName>Drive details</FormName>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <ul>
-          <li>
-            <label>Shipment date</label>
-            <input
+          <FormItem>
+            <Label>Shipment date</Label>
+            <Input
               {...register("shipmentDate", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
-          <li>
-            <label>Unloading date</label>
-            <input
+          </FormItem>
+          <FormItem>
+            <Label>Unloading date</Label>
+            <Input
               {...register("unloadingDate", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
-          <li>
-            <label>Carrier</label>
-            <input
+          </FormItem>
+          <FormItem>
+            <Label>Carrier</Label>
+            <Input
               {...register("carrier", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
-          <li>
-            <label>Client</label>
-            <input
+          </FormItem>
+          <FormItem>
+            <Label>Client</Label>
+            <Input
               {...register("client", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
-          <li>
-            <label>Departure point</label>
-            <input
+          </FormItem>
+          <FormItem>
+            <Label>Departure point</Label>
+            <Input
               {...register("departurePoint", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
-          <li>
-            <label>Arrival point</label>
-            <input
+          </FormItem>
+          <FormItem>
+            <Label>Arrival point</Label>
+            <Input
               {...register("arrivalPoint", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
-          <li>
-            <label>Vehicle data</label>
-            <input
+          </FormItem>
+          <FormItem>
+            <Label>Vehicle data</Label>
+            <Input
               {...register("vehicleData", { required: true })}
               disabled={!isEditEnabled}
+              color={isEditEnabled ? "black" : "white"}
             />
-          </li>
+          </FormItem>
         </ul>
-        <button
-          type="button"
-          onClick={() => setIsEditEnabled((state) => !state)}
-        >
-          {isEditEnabled ? "Save" : "Edit"}
-        </button>
-        <button type="submit">Submit Form</button>
+
+        <SubmitFormBtn type="submit">Save</SubmitFormBtn>
       </form>
-    </div>
+
+      {!isEditEnabled && (
+        <EditBtnWrap>
+          <EditBtn
+            type="button"
+            onClick={() => setIsEditEnabled((state) => !state)}
+          >
+            <BorderColorIcon sx={{ color: "white" }} />
+          </EditBtn>
+        </EditBtnWrap>
+      )}
+    </FormWrap>
   );
 };
 

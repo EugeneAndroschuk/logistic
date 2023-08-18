@@ -1,7 +1,7 @@
 
 import Container from "../../styles/Container";
 import Logo from "../Logo/Logo";
-import User from "../User/User";
+import UserNav from "../UserNav/UserNav";
 import { MenuWrap } from "./Header.styled";
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
         <Container>
           <MenuWrap>
             <Logo />
-            <User />
+            <UserNav />
           </MenuWrap>
         </Container>
       </>

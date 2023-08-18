@@ -5,6 +5,7 @@ import {getAllDrives} from "../../redux/drives/drivesThunks"
 import { getAllDrivesSelector } from "../../redux/drives/drivesSelectors";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import Drive from "../DriveItemShort/DriveItemShort";
+import Pagination from "@mui/material/Pagination";
 import {
   DriveListWrap,
   DriveListHeader,
@@ -16,9 +17,11 @@ import {
 
 
 const DriveList = () => {
-  const allDrives = useSelector(getAllDrivesSelector);
+  const {allDrives} = useSelector(getAllDrivesSelector);
   const isLoggedIn = useSelector(getUserIsLoggedIn);
   const dispatch = useDispatch();
+
+  // console.log(allDrives.allDrives);
 
   useEffect(() => {
     if (isLoggedIn) dispatch(getAllDrives());
@@ -53,12 +56,14 @@ const DriveList = () => {
         </HeaderItem>
       </DriveListHeader>
       <DriveListBody>
-        {allDrives.map((drive) => (
+        {allDrives && allDrives.map((drive) => (
           <DriveItemShortWrap key={drive._id}>
             <Drive drive={drive} />
           </DriveItemShortWrap>
         ))}
       </DriveListBody>
+
+      <Pagination count={10} variant="outlined" shape="rounded" />
     </DriveListWrap>
   );
 };

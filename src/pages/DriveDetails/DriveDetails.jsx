@@ -1,7 +1,8 @@
 
-import { Link } from "react-router-dom";
 import DriveItemForm from "../../components/DriveItemForm/DriveItemForm";
 import CityFinder from "../../components/CityFinder/CityFinder";
+import Container from "../../styles/Container";
+import { GoToMainBtn } from "./DriveDetailsPage.styled";
 
 const DriveDetails = () => {
   
@@ -9,10 +10,12 @@ const DriveDetails = () => {
 
     return (
       <>
-        <Link to="/">go to Main page</Link>
-        <h1>DriveDetails Page</h1>
-        <DriveItemForm />
-        <CityFinder />
+        <Container>
+          <GoToMainBtn to="/">go Back</GoToMainBtn>
+          
+          <DriveItemForm />
+          <CityFinder />
+        </Container>
       </>
     );
 }

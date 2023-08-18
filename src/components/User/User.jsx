@@ -1,25 +1,18 @@
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUserName } from "../../redux/auth/authSelectors";
-import { userLogout } from "../../redux/auth/authThunks";
-import { UserWrap, UserName, LogoutBtn } from "./User.styled";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { UserWrap, UserName } from "./User.styled";
 
 const User = () => {
-    const dispatch = useDispatch();
     const currentUser = useSelector(getUserName);
 
-    const onPressLogout = () => {
-        dispatch(userLogout());
-    }
-
-    return (
-      <UserWrap>
-        <UserName>{currentUser}</UserName>
-        <LogoutBtn type="button" onClick={onPressLogout}>
-          Logout
-        </LogoutBtn>
-      </UserWrap>
-    );
-}
+  return (
+    <UserWrap>
+      <AccountBoxIcon fontSize="large" sx={{ color: "rgb(219, 167, 22)" }} />
+      <UserName>{currentUser}</UserName>
+    </UserWrap>
+  );
+};
 
 export default User;

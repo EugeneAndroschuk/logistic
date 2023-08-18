@@ -11,7 +11,7 @@ import {userLogout} from "../auth/authThunks"
 
 const initialState = {
   updateSuccessful: false,
-  items: [],
+  items: {},
   isLoading: false,
   error: null,
 };

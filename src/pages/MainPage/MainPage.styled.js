@@ -8,45 +8,57 @@ export const MainPageWrap = styled.div`
 export const DriveListWrap = styled.div`
   height: 600px;
   padding: 0px 16px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const AddDriveBtn = styled(Link)`
   position: absolute;
   right: 30px;
-  bottom: 150px;
+  bottom: 50px;
+
+  text-decoration: none;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
 
-  border-radius: 50%;
-  border: 3px solid rgb(111, 245, 66);
-  background-color: rgba(111, 245, 66, 0.4);
+  width: 116px;
+  padding: 8px 0px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+
+  border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.3);
 
   &:hover,
   &:focus {
-    background-color: rgba(111, 245, 66, 0.6);
+    font-weight: 700;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.8);
   }
 `;
 
 export const FilterMenuBtn = styled.button`
   position: absolute;
   right: 30px;
-  bottom: 260px;
+  bottom: 100px;
 
-  width: 100px;
-  height: 100px;
+  padding: 8px 0px;
+  width: 116px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
 
-  border-radius: 50%;
-  border: 3px solid rgb(111, 245, 66);
-  background: rgba(111, 245, 66, 0.4);
+  border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.3);
 
   &:hover,
   &:focus {
-    background-color: rgba(111, 245, 66, 0.6);
+    color: black;
+    background-color: rgba(255, 255, 255, 0.8);
   }
 `;
 

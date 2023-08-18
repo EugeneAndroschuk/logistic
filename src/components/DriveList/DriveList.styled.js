@@ -24,7 +24,7 @@ color: black;
 `;
 
 export const DriveListBody = styled.ul`
-background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 `;
 
 export const DriveItemShortWrap = styled.li`

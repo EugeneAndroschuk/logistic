@@ -7,7 +7,7 @@ export const getAllDrives = createAsyncThunk(
   "drives/getAllDrives",
   async (_, thunkAPI) => {
     try {
-      const response = await axiosPrivate.get("/api/drives");
+      const response = await axiosPrivate.get("/api/drives?page=1&limit=30");
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
