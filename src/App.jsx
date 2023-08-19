@@ -10,38 +10,40 @@ import DriveDetails from "./pages/DriveDetails/DriveDetails";
 import SharedLayout from "./shared/components/SharedLayout/SharedLayout";
 import LoginForm from "./components/LoginForm/LoginForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
+import RestrictedRoute from "./pages/routes/RestrictedRoute";
+import PrivateRoute from "./pages/routes/PrivateRoute";
 
 const routes = [
   {
     path: "/",
-    element: <SharedLayout />,
+    element: <PrivateRoute component={SharedLayout} />,
     children: [
-      { index: true, element: <MainPage /> },
+      { index: true, element: <PrivateRoute component={MainPage} /> },
       {
         path: "/drives",
         element: <DrivePage />,
       },
       {
         path: "/drives/:driveId",
-        element: <DriveDetails />,
+        element: <PrivateRoute component={DriveDetails} />,
       },
       {
         path: "/adddrive",
-        element: <AddDrivePage />,
+        element: <PrivateRoute component={AddDrivePage} />,
       },
     ],
   },
   {
     path: "/auth",
-    element: <AuthPage />,
+    element: <RestrictedRoute component={AuthPage} />,
     children: [
       {
         path: "/auth/register",
-        element: <RegisterForm />,
+        element: <RestrictedRoute component={RegisterForm} />,
       },
       {
         path: "/auth/login",
-        element: <LoginForm />,
+        element: <RestrictedRoute component={LoginForm} />,
       },
     ],
   },

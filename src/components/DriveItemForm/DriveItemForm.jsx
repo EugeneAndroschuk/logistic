@@ -9,7 +9,7 @@ import {
 } from "../../redux/drives/drivesSelectors";
 import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
-import { getDriveById, updateDrive } from "../../redux/drives/drivesThunks";
+import { getDriveById, updateDrive, addDrive } from "../../redux/drives/drivesThunks";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {
   FormWrap,
@@ -44,7 +44,7 @@ const DriveItemForm = () => {
   }, [dispatch, isUpdateSuccessful, navigate]);
 
   useEffect(() => {
-    if (isLoggedIn) dispatch(getDriveById(driveId));
+    if (isLoggedIn && driveId) dispatch(getDriveById(driveId));
   }, [dispatch, driveId, isLoggedIn]);
 
   useEffect(() => {
@@ -60,18 +60,25 @@ const DriveItemForm = () => {
   }, [drives, setValue]);
 
   const onFormSubmit = (data) => {
-    dispatch(
-      updateDrive({
-        driveId,
-        shipmentDate: setDateForBackend(data.shipmentDate),
-        unloadingDate: setDateForBackend(data.unloadingDate),
-        carrier: data.carrier,
-        client: data.client,
-        departurePoint: data.departurePoint,
-        arrivalPoint: data.arrivalPoint,
-        vehicleData: data.vehicleData,
-      })
-    );
+    if (driveId)
+      dispatch(
+        updateDrive({
+          driveId,
+          shipmentDate: setDateForBackend(data.shipmentDate),
+          unloadingDate: setDateForBackend(data.unloadingDate),
+          carrier: data.carrier,
+          client: data.client,
+          departurePoint: data.departurePoint,
+          arrivalPoint: data.arrivalPoint,
+          vehicleData: data.vehicleData,
+        })
+      ); else dispatch(
+        addDrive({
+          ...data,
+          shipmentDate: setDateForBackend(data.shipmentDate),
+          unloadingDate: setDateForBackend(data.unloadingDate),
+        })
+      );
     setIsFormSubmited(true);
   };
 

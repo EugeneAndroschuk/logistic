@@ -6,14 +6,19 @@ export const MainPageWrap = styled.div`
 `;
 
 export const DriveListWrap = styled.div`
-  height: 600px;
-  padding: 0px 16px;
-  overflow-y: auto;
+  height: 570px;
+  // padding: 0px 16px;
+  // overflow-y: auto;
+`;
+
+export const PaginationWrap = styled.div`
+display: flex;
+justify-content: center;
 `;
 
 export const AddDriveBtn = styled(Link)`
   position: absolute;
-  right: 30px;
+  right: 10px;
   bottom: 50px;
 
   text-decoration: none;
@@ -42,7 +47,7 @@ export const AddDriveBtn = styled(Link)`
 
 export const FilterMenuBtn = styled.button`
   position: absolute;
-  right: 30px;
+  right: 10px;
   bottom: 100px;
 
   padding: 8px 0px;

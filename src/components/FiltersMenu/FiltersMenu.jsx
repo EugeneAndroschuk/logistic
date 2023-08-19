@@ -26,24 +26,29 @@ const FiltersMenu = ({ toggleModal, onSetQuery }) => {
   const uniqOwners = makeUniqUsers(owners);
   
   const onApplyFilters = () => {
-    let searchId;
+    let queryId = "";
     if (user !== "") {
       const { _id } = uniqOwners.find(owner => owner.name === user);
-      searchId = `&userId=${_id}`;
+      queryId = `&userId=${_id}`;
     }
     
-    let str = "";
-    let querySearch = str.concat(
-      "dateFrom=",
-      setDateForQuerySearch(dateFrom),
-      "&dateTill=",
-      setDateForQuerySearch(dateTill),
-    );
-    if (searchId) querySearch = querySearch.concat(searchId);
+    const queryDate = `&dateFrom=${setDateForQuerySearch(
+      dateFrom
+    )}&dateTill=${setDateForQuerySearch(dateTill)}`;
+
+    let queryFilters = "";
+    // let queryDate = str.concat(
+    //   "dateFrom=",
+    //   setDateForQuerySearch(dateFrom),
+    //   "&dateTill=",
+    //   setDateForQuerySearch(dateTill),
+    // );
+    queryFilters = queryFilters.concat(queryDate);
+    if (queryId) queryFilters = queryFilters.concat(queryId);
     
       // dispatch(getDrivesByQuery(querySearch));
     // setQueryString(querySearch);
-    onSetQuery(querySearch);
+    onSetQuery(queryFilters);
   }
 
   // useEffect(() => {

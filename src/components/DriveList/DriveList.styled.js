@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const DriveListWrap = styled.div`
-
+margin-bottom: 20px;
 `;
 
 export const DriveListHeader = styled.ul`
