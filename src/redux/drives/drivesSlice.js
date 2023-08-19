@@ -1,6 +1,5 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
-  getAllDrives,
   getDrivesByQuery,
   getDriveById,
   addDrive,
@@ -28,7 +27,6 @@ export const drivesSlice = createSlice({
     builder
       .addMatcher(
         isAnyOf(
-          getAllDrives.pending,
           getDrivesByQuery.pending,
           getDriveById.pending,
           deleteDrive.pending
@@ -43,7 +41,6 @@ export const drivesSlice = createSlice({
       })
       .addMatcher(
         isAnyOf(
-          getAllDrives.rejected,
           getDrivesByQuery.rejected,
           getDriveById.rejected,
           deleteDrive.rejected
@@ -62,7 +59,7 @@ export const drivesSlice = createSlice({
         }
       )
       .addMatcher(
-        isAnyOf(getAllDrives.fulfilled, getDrivesByQuery.fulfilled),
+        isAnyOf(getDrivesByQuery.fulfilled),
         (state, action) => {
           state.isLoading = false;
           state.error = null;
@@ -74,34 +71,35 @@ export const drivesSlice = createSlice({
         state.error = null;
         state.items = [action.payload];
       })
-      .addMatcher(isAnyOf(addDrive.fulfilled), (state, action) => {
+      .addMatcher(isAnyOf(addDrive.fulfilled), (state,) => {
         state.isLoading = false;
         state.updateSuccessful = true;
         state.error = null;
-        state.items.push(action.payload);
+        // state.items.push(action.payload);
       })
-      .addMatcher(isAnyOf(deleteDrive.fulfilled), (state, action) => {
+      .addMatcher(isAnyOf(deleteDrive.fulfilled), (state,) => {
         state.isLoading = false;
         state.error = null;
-        console.log(action.payload);
-        const index = state.items.findIndex(
-          (drive) => drive._id === action.payload._id
-        );
-        state.items.splice(index, 1);
+        
+        // const index = state.items.findIndex(
+        //   (drive) => drive._id === action.payload._id
+        // );
+        // state.items.splice(index, 1);
       })
-      .addMatcher(isAnyOf(updateDrive.fulfilled), (state, action) => {
+      .addMatcher(isAnyOf(updateDrive.fulfilled), (state,) => {
         state.isLoading = false;
         state.updateSuccessful = true;
         state.error = null;
-        const index = state.items.findIndex(
-          (drive) => drive._id === action.payload._id
-        );
-        state.items.splice(index, 1, action.payload);
+
+        // const index = state.items.findIndex(
+        //   (drive) => drive._id === action.payload._id
+        // );
+        // state.items.splice(index, 1, action.payload);
       })
       .addMatcher(isAnyOf(userLogout.fulfilled), (state) => {
         state.isLoading = false;
         state.error = null;
-        state.items = [];
+        state.items = {};
       });
   },
 });

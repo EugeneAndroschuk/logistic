@@ -1,9 +1,8 @@
 
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import {getAllDrives} from "../../redux/drives/drivesThunks"
+import { useSelector } from "react-redux";
+// import { useEffect } from "react";
 import { getAllDrivesSelector } from "../../redux/drives/drivesSelectors";
-import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
+// import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import Drive from "../DriveItemShort/DriveItemShort";
 
 import {
@@ -18,8 +17,8 @@ import {
 
 const DriveList = () => {
   const {allDrives} = useSelector(getAllDrivesSelector);
-  const isLoggedIn = useSelector(getUserIsLoggedIn);
-  const dispatch = useDispatch();
+  // const isLoggedIn = useSelector(getUserIsLoggedIn);
+  // const dispatch = useDispatch();
 
   // console.log(allDrives.allDrives);
 

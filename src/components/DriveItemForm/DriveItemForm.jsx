@@ -31,7 +31,7 @@ const DriveItemForm = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
   const drives = useSelector(getAllDrivesSelector);
   const isUpdateSuccessful = useSelector(getUpdateSuccessfulSelector);
