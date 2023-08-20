@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import Container from "../../styles/Container";
 import Logo from "../Logo/Logo";
 import UserNav from "../UserNav/UserNav";
@@ -10,6 +11,7 @@ const Header = () => {
         <Container>
           <MenuWrap>
             <Logo />
+            <Link to="/clients">Cliets page</Link>
             <UserNav />
           </MenuWrap>
         </Container>

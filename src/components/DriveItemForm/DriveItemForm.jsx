@@ -11,6 +11,9 @@ import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import { getDriveById, updateDrive, addDrive } from "../../redux/drives/drivesThunks";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ModalPort from "../../shared/components/ModalPort/ModalPort";
+import ModalClientsList from "../../shared/components/ModalClientsList/ModalClientsList";
 import {
   FormWrap,
   FormName,
@@ -25,6 +28,7 @@ import {
 const DriveItemForm = () => {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [isFormSubmited, setIsFormSubmited] = useState(false);
+  const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
   const { driveId } = useParams();
   const dispatch = useDispatch();
   const {
@@ -82,6 +86,14 @@ const DriveItemForm = () => {
     setIsFormSubmited(true);
   };
 
+  const toggleModal = () => {
+    setIsModalClientsListOpen(!isModalClientsListOpen);
+  }
+
+  const onSelectClient = (name) => {
+    setValue("client", name);
+  }
+
   return (
     <FormWrap>
       <FormName>Drive details</FormName>
@@ -91,56 +103,87 @@ const DriveItemForm = () => {
             <Label>Shipment date</Label>
             <Input
               {...register("shipmentDate", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
           </FormItem>
           <FormItem>
             <Label>Unloading date</Label>
             <Input
               {...register("unloadingDate", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
           </FormItem>
           <FormItem>
             <Label>Carrier</Label>
             <Input
               {...register("carrier", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
           </FormItem>
           <FormItem>
             <Label>Client</Label>
             <Input
               {...register("client", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
+            <button type="button" onClick={() => toggleModal()}>
+              <MoreHorizIcon sx={{ color: "white" }} />
+            </button>
           </FormItem>
           <FormItem>
             <Label>Departure point</Label>
             <Input
               {...register("departurePoint", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
           </FormItem>
           <FormItem>
             <Label>Arrival point</Label>
             <Input
               {...register("arrivalPoint", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
           </FormItem>
           <FormItem>
             <Label>Vehicle data</Label>
             <Input
               {...register("vehicleData", { required: true })}
-              disabled={!isEditEnabled}
-              color={isEditEnabled ? "black" : "white"}
+              disabled={!isEditEnabled ? driveId : false}
+              color={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "black"
+                  : "white"
+              }
             />
           </FormItem>
         </ul>
@@ -148,7 +191,7 @@ const DriveItemForm = () => {
         <SubmitFormBtn type="submit">Save</SubmitFormBtn>
       </form>
 
-      {!isEditEnabled && (
+      {!isEditEnabled && driveId && (
         <EditBtnWrap>
           <EditBtn
             type="button"
@@ -157,6 +200,15 @@ const DriveItemForm = () => {
             <BorderColorIcon sx={{ color: "white" }} />
           </EditBtn>
         </EditBtnWrap>
+      )}
+
+      {isModalClientsListOpen && (
+        <ModalPort toggleModal={toggleModal}>
+          <ModalClientsList
+            toggleModal={toggleModal}
+            onSelectClient={onSelectClient}
+          />
+        </ModalPort>
       )}
     </FormWrap>
   );

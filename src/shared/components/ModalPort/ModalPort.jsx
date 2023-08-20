@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
 import { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
-import { ModalOverlay } from "./Modal.styled";
+import { ModalOverlay } from "./ModalPort.styled";
 
 const modalRoot = document.querySelector("#modal-root");
 
-const Modal = ({ toggleModal, children }) => {
+const ModalPort = ({ toggleModal, children }) => {
   const onCloseModal = useCallback(
     (e) => {
       if (e.target === e.currentTarget || e.code === "Escape") {
@@ -33,8 +33,8 @@ const Modal = ({ toggleModal, children }) => {
   );
 };
 
-export default Modal;
+export default ModalPort;
 
-Modal.propTypes = {
+ModalPort.propTypes = {
   toggleModal: PropTypes.func.isRequired,
 };

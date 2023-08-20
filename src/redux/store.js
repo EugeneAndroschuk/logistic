@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 import { authReducer } from "./auth/authSlice";
 import { drivesReducer } from "./drives/drivesSlice";
+import { clientsReducer } from "./clients/clientsSlice";
 import handleMiddleware from "../utils/handleMiddleware";
 
 const persistConfig = {
@@ -27,6 +28,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     drives: drivesReducer,
+    clients: clientsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

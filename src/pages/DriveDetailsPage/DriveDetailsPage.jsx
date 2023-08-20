@@ -4,10 +4,8 @@ import CityFinder from "../../components/CityFinder/CityFinder";
 import Container from "../../styles/Container";
 import { GoToMainBtn } from "./DriveDetailsPage.styled";
 
-const DriveDetails = () => {
+const DriveDetailsPage = () => {
   
-  
-
     return (
       <>
         <Container>
@@ -20,4 +18,4 @@ const DriveDetails = () => {
     );
 }
 
-export default DriveDetails;
+export default DriveDetailsPage;

@@ -4,12 +4,13 @@ import { useDispatch } from "react-redux";
 import { userRefresh } from "./redux/auth/authThunks";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import MainPage from "./pages/MainPage/MainPage";
-import DrivePage from "./pages/DrivePage/DrivePage";
 import AddDrivePage from "./pages/AddDrivePage/AddDrivePage";
-import DriveDetails from "./pages/DriveDetails/DriveDetails";
+import DriveDetailsPage from "./pages/DriveDetailsPage/DriveDetailsPage";
 import SharedLayout from "./shared/components/SharedLayout/SharedLayout";
 import LoginForm from "./components/LoginForm/LoginForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
+import ClientsPage from "./pages/ClientsPage/ClientsPage";
+import ClientDetailsPage from "./pages/ClientDetailsPage/ClientDetailsPage";
 import RestrictedRoute from "./pages/routes/RestrictedRoute";
 import PrivateRoute from "./pages/routes/PrivateRoute";
 
@@ -20,16 +21,20 @@ const routes = [
     children: [
       { index: true, element: <PrivateRoute component={MainPage} /> },
       {
-        path: "/drives",
-        element: <DrivePage />,
-      },
-      {
         path: "/drives/:driveId",
-        element: <PrivateRoute component={DriveDetails} />,
+        element: <PrivateRoute component={DriveDetailsPage} />,
       },
       {
         path: "/adddrive",
         element: <PrivateRoute component={AddDrivePage} />,
+      },
+      {
+        path: "/clients",
+        element: <PrivateRoute component={ClientsPage} />,
+      },
+      {
+        path: "/clients/:clientId",
+        element: <PrivateRoute component={ClientDetailsPage} />,
       },
     ],
   },

@@ -66,7 +66,6 @@ const MainPage = () => {
   }
 
   const onSetQuery = (str) => {
-    console.log(str);
     setQueryFilters(str);
     setPage(1);
   };
