@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { getDateFromUtc, setDateForBackend } from "../../utils/dateFormatter";
 import {
   getAllDrivesSelector,
@@ -9,9 +9,19 @@ import {
 } from "../../redux/drives/drivesSelectors";
 import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
-import { getDriveById, updateDrive, addDrive } from "../../redux/drives/drivesThunks";
+import {
+  getDriveById,
+  updateDrive,
+  addDrive,
+} from "../../redux/drives/drivesThunks";
+import { setDateForQuerySearch } from "../../utils/dateFormatter";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ModalPort from "../../shared/components/ModalPort/ModalPort";
 import ModalClientsList from "../../shared/components/ModalClientsList/ModalClientsList";
 import {
@@ -20,6 +30,7 @@ import {
   FormItem,
   Label,
   Input,
+  ClientListBtn,
   SubmitFormBtn,
   EditBtnWrap,
   EditBtn,
@@ -29,11 +40,13 @@ const DriveItemForm = () => {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [isFormSubmited, setIsFormSubmited] = useState(false);
   const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
+  const [dateFrom, setDateFrom] = useState(dayjs(new Date()));
   const { driveId } = useParams();
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     // formState: { errors },
   } = useForm();
@@ -43,8 +56,10 @@ const DriveItemForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isUpdateSuccessful) {navigate("/");
-    dispatch(setUpdateSuccessful(false));}
+    if (isUpdateSuccessful) {
+      navigate("/");
+      dispatch(setUpdateSuccessful(false));
+    }
   }, [dispatch, isUpdateSuccessful, navigate]);
 
   useEffect(() => {
@@ -53,8 +68,11 @@ const DriveItemForm = () => {
 
   useEffect(() => {
     if (drives[0]) {
-      setValue("shipmentDate", getDateFromUtc(drives[0].shipmentDate));
-      setValue("unloadingDate", getDateFromUtc(drives[0].unloadingDate));
+      // setValue("shipmentDate", getDateFromUtc(drives[0].shipmentDate));
+      // setValue("unloadingDate", getDateFromUtc(drives[0].unloadingDate));
+
+      setValue("shipmentDate", dayjs(drives[0].shipmentDate));
+      setValue("unloadingDate", dayjs(drives[0].unloadingDate));
       setValue("carrier", drives[0].carrier);
       setValue("client", drives[0].client);
       setValue("departurePoint", drives[0].departurePoint);
@@ -68,31 +86,34 @@ const DriveItemForm = () => {
       dispatch(
         updateDrive({
           driveId,
-          shipmentDate: setDateForBackend(data.shipmentDate),
-          unloadingDate: setDateForBackend(data.unloadingDate),
+          shipmentDate: setDateForQuerySearch(data.shipmentDate),
+          unloadingDate: setDateForQuerySearch(data.unloadingDate),
           carrier: data.carrier,
           client: data.client,
           departurePoint: data.departurePoint,
           arrivalPoint: data.arrivalPoint,
           vehicleData: data.vehicleData,
         })
-      ); else dispatch(
+      );
+    else
+      dispatch(
         addDrive({
           ...data,
-          shipmentDate: setDateForBackend(data.shipmentDate),
-          unloadingDate: setDateForBackend(data.unloadingDate),
+          shipmentDate: setDateForQuerySearch(data.shipmentDate),
+          unloadingDate: setDateForQuerySearch(data.unloadingDate),
         })
       );
-    setIsFormSubmited(true);
+    // console.log(data.shipmentDate);
+    // console.log(setDateForQuerySearch(data.shipmentDate));
   };
 
   const toggleModal = () => {
     setIsModalClientsListOpen(!isModalClientsListOpen);
-  }
+  };
 
   const onSelectClient = (name) => {
     setValue("client", name);
-  }
+  };
 
   return (
     <FormWrap>
@@ -101,26 +122,85 @@ const DriveItemForm = () => {
         <ul>
           <FormItem>
             <Label>Shipment date</Label>
-            <Input
-              {...register("shipmentDate", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
+            <Controller
+              name="shipmentDate"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={dayjs(value)}
+                    onChange={onChange}
+                    format="DD.MM.YYYY"
+                    sx={{
+                      width: "600px",
+                      backgroundColor:
+                        (isEditEnabled && driveId) ||
+                        (!isEditEnabled && !driveId)
+                          ? "white"
+                          : "rgba(239, 239, 239, 0.3)",
+                      borderRadius: "10px",
+                      "& input": {
+                        color:
+                          (isEditEnabled && driveId) ||
+                          (!isEditEnabled && !driveId)
+                            ? "black"
+                            : "white",
+                        padding: "8px",
+                        fontSize: "13px",
+                      },
+                      "& svg": {
+                        color:
+                          (isEditEnabled && driveId) ||
+                          (!isEditEnabled && !driveId)
+                            ? "black"
+                            : "white",
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              )}
             />
           </FormItem>
           <FormItem>
             <Label>Unloading date</Label>
-            <Input
-              {...register("unloadingDate", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
+
+            <Controller
+              name="unloadingDate"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={dayjs(value)}
+                    onChange={onChange}
+                    format="DD.MM.YYYY"
+                    sx={{
+                      width: "600px",
+                      backgroundColor:
+                        (isEditEnabled && driveId) ||
+                        (!isEditEnabled && !driveId)
+                          ? "white"
+                          : "rgba(239, 239, 239, 0.3)",
+                      borderRadius: "10px",
+                      "& input": {
+                        color:
+                          (isEditEnabled && driveId) ||
+                          (!isEditEnabled && !driveId)
+                            ? "black"
+                            : "white",
+                        padding: "8px",
+                        fontSize: "13px",
+                      },
+                      "& svg": {
+                        color:
+                          (isEditEnabled && driveId) ||
+                          (!isEditEnabled && !driveId)
+                            ? "black"
+                            : "white",
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              )}
             />
           </FormItem>
           <FormItem>
@@ -128,7 +208,7 @@ const DriveItemForm = () => {
             <Input
               {...register("carrier", { required: true })}
               disabled={!isEditEnabled ? driveId : false}
-              color={
+              $color={
                 (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
                   ? "black"
                   : "white"
@@ -139,23 +219,31 @@ const DriveItemForm = () => {
             <Label>Client</Label>
             <Input
               {...register("client", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              color={
+              disabled={true}
+              // disabled={!isEditEnabled ? driveId : false}
+              $bgdcolor={
+                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                  ? "white"
+                  : "rgba(239, 239, 239, 0.3)"
+              }
+              $color={
                 (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
                   ? "black"
                   : "white"
               }
             />
-            <button type="button" onClick={() => toggleModal()}>
-              <MoreHorizIcon sx={{ color: "white" }} />
-            </button>
+            {((isEditEnabled && driveId) || (!isEditEnabled && !driveId)) && (
+              <ClientListBtn type="button" onClick={() => toggleModal()}>
+                <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
+              </ClientListBtn>
+            )}
           </FormItem>
           <FormItem>
             <Label>Departure point</Label>
             <Input
               {...register("departurePoint", { required: true })}
               disabled={!isEditEnabled ? driveId : false}
-              color={
+              $color={
                 (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
                   ? "black"
                   : "white"
@@ -167,7 +255,7 @@ const DriveItemForm = () => {
             <Input
               {...register("arrivalPoint", { required: true })}
               disabled={!isEditEnabled ? driveId : false}
-              color={
+              $color={
                 (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
                   ? "black"
                   : "white"
@@ -179,7 +267,7 @@ const DriveItemForm = () => {
             <Input
               {...register("vehicleData", { required: true })}
               disabled={!isEditEnabled ? driveId : false}
-              color={
+              $color={
                 (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
                   ? "black"
                   : "white"

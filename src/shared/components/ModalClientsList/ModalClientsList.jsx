@@ -4,14 +4,22 @@ import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import { getClientsByQuery } from "../../../redux/clients/clientsThunks";
 import { getAllClientsSelector } from "../../../redux/clients/clientsSelectors";
-import { ModalWrap } from "./ModalClientsList.styled";
+import {
+  ModalWrap,
+  HeadList,
+  HedItem,
+  ClientsList,
+  ClientsItem,
+  ClientsName,
+} from "./ModalClientsList.styled";
 
 const ModalClientsList = ({ toggleModal, onSelectClient }) => {
   const { allClients } = useSelector(getAllClientsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getClientsByQuery("page=1&limit=10"));
+    dispatch(getClientsByQuery(""));
+    // document.getElementsByTagName("div").click();
   }, [dispatch]);
     
     const onSelectItem = (name) => {
@@ -21,18 +29,36 @@ const ModalClientsList = ({ toggleModal, onSelectClient }) => {
 
   return (
     <ModalWrap>
-          <CloseIcon onClick={toggleModal} sx={{cursor: "pointer"}} />
+      <CloseIcon
+        onClick={toggleModal}
+        sx={{ cursor: "pointer", display: "block", marginLeft: "auto" }}
+      />
 
-      <ul>
+      <HeadList>
+        <HedItem>
+          <p>Code</p>
+        </HedItem>
+        <HedItem>
+          <p>Name</p>
+        </HedItem>
+        <HedItem>
+          <p>Comments</p>
+        </HedItem>
+      </HeadList>
+
+      <ClientsList>
         {allClients &&
           allClients.map((client) => (
-            <li key={client._id} onClick={()=>onSelectItem(client.name)}>
-              <p>{client.code}</p>
-              <p>{client.name}</p>
-              <p>{client.comments}</p>
-            </li>
+            <ClientsItem
+              key={client._id}
+              onClick={() => onSelectItem(client.name)}
+            >
+              <ClientsName>{client.code}</ClientsName>
+              <ClientsName>{client.name}</ClientsName>
+              <ClientsName>{client.comments}</ClientsName>
+            </ClientsItem>
           ))}
-      </ul>
+      </ClientsList>
     </ModalWrap>
   );
 };

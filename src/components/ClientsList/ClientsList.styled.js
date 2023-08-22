@@ -9,12 +9,25 @@ export const ClientListHeader = styled.ul`
 `;
 
 export const HeaderItem = styled.li`
+  &:nth-child(1) {
+    width: 100px;
+  }
+
+  &:nth-child(2) {
+    width: 650px;
+  }
+
+  &:nth-child(3) {
+    width: 500px;
+  }
+
   text-align: center;
   border-right: 1px solid grey;
 `;
 
 export const HeaderItemName = styled.p`
-  width: 156px;
+  // width: 156px;
+  
   padding: 8px 0px;
   font-size: 18px;
   font-weight: 700;

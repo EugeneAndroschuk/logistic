@@ -18,6 +18,7 @@ const ModalPort = ({ toggleModal, children }) => {
   useEffect(() => {
     window.addEventListener("keydown", onCloseModal);
     document.body.style.overflow = "hidden";
+    
 
     return () => {
       window.removeEventListener("keydown", onCloseModal);

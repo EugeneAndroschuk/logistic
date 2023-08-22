@@ -22,6 +22,7 @@ export const FormName = styled.h1`
 `;
 
 export const FormItem = styled.li`
+position: relative;
 margin-bottom: 8px;
 `;
 
@@ -34,11 +35,26 @@ color: white;
 `;
 
 export const Input = styled.input`
-width: 600px;
-padding: 8px;
-color: ${props => props.color};
+  width: 600px;
+  padding: 8px;
+  color: ${(props) => props.$color};
+  background-color: ${(props) => props.$bgdcolor};
 
-border-radius: 10px;
+  border-radius: 10px;
+`;
+
+export const ClientListBtn = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 16px;
+
+  background-color: transparent;
+  border: none;
+
+  :hover,
+  :focus {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  }
 `;
 
 export const SubmitFormBtn = styled.button`

@@ -26,6 +26,8 @@ const FiltersMenu = ({ toggleModal, onSetQuery }) => {
   const uniqOwners = makeUniqUsers(owners);
   
   const onApplyFilters = () => {
+    console.log(dateFrom);
+    console.log(setDateForQuerySearch(dateFrom));
     let queryId = "";
     if (user !== "") {
       const { _id } = uniqOwners.find(owner => owner.name === user);
@@ -48,7 +50,7 @@ const FiltersMenu = ({ toggleModal, onSetQuery }) => {
     
       // dispatch(getDrivesByQuery(querySearch));
     // setQueryString(querySearch);
-    onSetQuery(queryFilters);
+    // onSetQuery(queryFilters);
   }
 
   // useEffect(() => {

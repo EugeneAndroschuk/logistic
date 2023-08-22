@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { getClientsByQuery } from "../../redux/clients/clientsThunks";
 import ClientList from "../../components/ClientsList/ClientsList";
 import Container from "../../styles/Container";
+import { AddDriveBtn } from "./ClientsPage.styled";
 
 const ClientsPage = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,8 @@ const ClientsPage = () => {
     return (
       <div>
         <Container>
-          <ClientList/>
+          <ClientList />
+          <AddDriveBtn to="/addclient">ADD CLIENT</AddDriveBtn>
         </Container>
       </div>
     );

@@ -36,10 +36,14 @@ export const setDateForBackend = (str) => {
 };
 
 export const setDateForQuerySearch = (dateUnformatted) => {
-  const date = new Date(dateUnformatted);
-  const day = String(date.getUTCDate()).padStart(2, 0);
-  const month = String(date.getUTCMonth() + 1).padStart(2, 0);
-  const year = date.getUTCFullYear();
+  // const date = new Date(dateUnformatted);
+  // const day = String(date.getUTCDate()).padStart(2, 0);
+  // const month = String(date.getUTCMonth() + 1).padStart(2, 0);
+  // const year = date.getUTCFullYear();
+
+  const day = dateUnformatted.$D
+  const month = dateUnformatted.$M + 1;
+  const year = dateUnformatted.$y;
 
   return [month, day, year].join("-");
 };

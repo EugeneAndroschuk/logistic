@@ -5,6 +5,7 @@ import { userRefresh } from "./redux/auth/authThunks";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import MainPage from "./pages/MainPage/MainPage";
 import AddDrivePage from "./pages/AddDrivePage/AddDrivePage";
+import AddClientPage from "./pages/AddClientPage/AddClientPage";
 import DriveDetailsPage from "./pages/DriveDetailsPage/DriveDetailsPage";
 import SharedLayout from "./shared/components/SharedLayout/SharedLayout";
 import LoginForm from "./components/LoginForm/LoginForm";
@@ -35,6 +36,10 @@ const routes = [
       {
         path: "/clients/:clientId",
         element: <PrivateRoute component={ClientDetailsPage} />,
+      },
+      {
+        path: "/addclient",
+        element: <PrivateRoute component={AddClientPage} />,
       },
     ],
   },

@@ -51,7 +51,7 @@ const Drive = ({ drive }) => {
         </DriveList>
       </DriveLinkWrap>
       <DropMenu>
-        <DeleteBtn src={deleteImg} onClick={onPressDelete}/>
+        <DeleteBtn src={deleteImg} onClick={onPressDelete} />
       </DropMenu>
     </DriveWrap>
   );

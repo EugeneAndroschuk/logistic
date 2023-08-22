@@ -22,12 +22,23 @@ export const ClientList = styled.ul`
 `;
 
 export const ClientItem = styled.li`
+  &:nth-child(1) {
+    width: 100px;
+  }
+
+  &:nth-child(2) {
+    width: 650px;
+  }
+
+  &:nth-child(3) {
+    width: 500px;
+  }
   text-align: center;
   border-right: 1px solid grey;
 `;
 
 export const ClientName = styled.p`
-  width: 156px;
+  // width: 156px;
   padding: 5px 0px;
 
   font-size: 16px;
