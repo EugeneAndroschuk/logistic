@@ -13,7 +13,12 @@ import dayjs from "dayjs";
 import "dayjs/locale/uk";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {MenuItem, Select} from "@mui/material";
-import { FiltersMenuWrap, CloseBtn, DateWrap } from "./FiltersMenu.styled";
+import {
+  FiltersMenuWrap,
+  CloseBtn,
+  DateWrap,
+  ApplyFilterBtn,
+} from "./FiltersMenu.styled";
 
 const FiltersMenu = ({ toggleModal, onSetQuery }) => {
   const [dateFrom, setDateFrom] = useState(dayjs(new Date()));
@@ -24,11 +29,10 @@ const FiltersMenu = ({ toggleModal, onSetQuery }) => {
   const {allDrives} = useSelector(getAllDrivesSelector);
   const owners = allDrives.map((drive) => drive.owner);
   const uniqOwners = makeUniqUsers(owners);
-  
+
   const onApplyFilters = () => {
-    console.log(dateFrom);
-    console.log(setDateForQuerySearch(dateFrom));
     let queryId = "";
+    
     if (user !== "") {
       const { _id } = uniqOwners.find(owner => owner.name === user);
       queryId = `&userId=${_id}`;
@@ -39,18 +43,13 @@ const FiltersMenu = ({ toggleModal, onSetQuery }) => {
     )}&dateTill=${setDateForQuerySearch(dateTill)}`;
 
     let queryFilters = "";
-    // let queryDate = str.concat(
-    //   "dateFrom=",
-    //   setDateForQuerySearch(dateFrom),
-    //   "&dateTill=",
-    //   setDateForQuerySearch(dateTill),
-    // );
+    
     queryFilters = queryFilters.concat(queryDate);
+
     if (queryId) queryFilters = queryFilters.concat(queryId);
     
-      // dispatch(getDrivesByQuery(querySearch));
-    // setQueryString(querySearch);
-    // onSetQuery(queryFilters);
+    onSetQuery(queryFilters);
+    toggleModal();
   }
 
   // useEffect(() => {
@@ -95,12 +94,15 @@ const FiltersMenu = ({ toggleModal, onSetQuery }) => {
             <MenuItem value="">
               <em>All users</em>
             </MenuItem>
-            {uniqOwners.map(owner => <MenuItem value={owner.name} key={owner._id}>{owner.name}</MenuItem>)}
+            {uniqOwners.map((owner) => (
+              <MenuItem value={owner.name} key={owner._id}>
+                {owner.name}
+              </MenuItem>
+            ))}
           </Select>
-  
-          <button type="button" onClick={onApplyFilters}>
+          <ApplyFilterBtn type="button" onClick={onApplyFilters}>
             Apply filter
-          </button>
+          </ApplyFilterBtn>
         </LocalizationProvider>
       </FiltersMenuWrap>
     );

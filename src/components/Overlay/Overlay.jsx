@@ -20,6 +20,7 @@ const Overlay = ({ toggleModal }) => {
     return () => {
       window.removeEventListener("keydown", onCloseModal);
       document.body.style.overflow = "auto";
+      document.getElementById('filterbtn').blur();
     };
   }, [onCloseModal]);
 

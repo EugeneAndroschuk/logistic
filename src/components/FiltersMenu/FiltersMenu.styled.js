@@ -19,3 +19,9 @@ export const DateWrap = styled.div`
 display: flex;
 gap: 16px;
 `;
+
+export const ApplyFilterBtn = styled.button`
+position: absolute;
+bottom: 20px;
+right: 20px;
+`;

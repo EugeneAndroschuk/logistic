@@ -91,7 +91,7 @@ const MainPage = () => {
           </PaginationWrap>
 
           <AddDriveBtn to="/adddrive">ADD DRIVE</AddDriveBtn>
-          <FilterMenuBtn type="button" onClick={toggleModal}>
+          <FilterMenuBtn id="filterbtn" type="button" onClick={toggleModal}>
             FILTERS
           </FilterMenuBtn>
 
