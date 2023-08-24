@@ -1,13 +1,16 @@
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Outlet, useLocation } from "react-router-dom";
 import { getClientsByQuery } from "../../redux/clients/clientsThunks";
-import ClientList from "../../components/ClientsList/ClientsList";
 import Container from "../../styles/Container";
-import { AddDriveBtn } from "./ClientsPage.styled";
+import { GoBackBtn, AddDriveBtn } from "./ClientsPage.styled";
 
 const ClientsPage = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const isClientsPage =
+    pathname === "/clients" ? true : false; 
 
     useEffect(() => {
         const page = 1;
@@ -22,8 +25,11 @@ const ClientsPage = () => {
     return (
       <div>
         <Container>
-          <ClientList />
-          <AddDriveBtn to="/addclient">ADD CLIENT</AddDriveBtn>
+          {!isClientsPage && <GoBackBtn to="/clients">go Back</GoBackBtn>}
+          <Outlet />
+          {isClientsPage && (
+            <AddDriveBtn to="/clients/add">ADD CLIENT</AddDriveBtn>
+          )}
         </Container>
       </div>
     );

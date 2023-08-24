@@ -1,33 +1,18 @@
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { getDateFromUtc, setDateForBackend } from "../../utils/dateFormatter";
-import {
-  getAllDrivesSelector,
-  getUpdateSuccessfulSelector,
-} from "../../redux/drives/drivesSelectors";
-import { setUpdateSuccessful } from "../../redux/drives/drivesSlice";
-import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
-import {
-  getDriveById,
-  updateDrive,
-  addDrive,
-} from "../../redux/drives/drivesThunks";
-import { setDateForQuerySearch } from "../../utils/dateFormatter";
+import { setDateForQuerySearch } from "../../../utils/dateFormatter";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import ModalPort from "../../shared/components/ModalPort/ModalPort";
-import ModalClientsList from "../../shared/components/ModalClientsList/ModalClientsList";
-import ModalDeleteAlert from "../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
+import ModalPort from "../../../shared/components/ModalPort/ModalPort";
+import ModalClientsList from "../../../shared/components/ModalClientsList/ModalClientsList";
+import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
 import {
   FormWrap,
-  FormName,
   FormItem,
   Label,
   Input,
@@ -35,18 +20,16 @@ import {
   BtnWrap,
   SubmitFormBtn,
   DeleteBtn,
-  EditBtnWrap,
-  EditBtn,
-} from "./DriveItemForm.styled";
+} from "./DriveItemFormFirst.styled";
 
-const DriveItemForm = () => {
-  const [isEditEnabled, setIsEditEnabled] = useState(false);
-  const [isFormSubmited, setIsFormSubmited] = useState(false);
+const DriveItemFormFirst = ({
+  isEditEnabled,
+  drive,
+  driveId,
+  onSetFirstStep,
+}) => {
   const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
   const [isModalDeleteAlertOpen, setIsModalDeleteAlertOpen] = useState(false);
-  const [dateFrom, setDateFrom] = useState(dayjs(new Date()));
-  const { driveId } = useParams();
-  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -54,61 +37,25 @@ const DriveItemForm = () => {
     setValue,
     // formState: { errors },
   } = useForm();
-  const drives = useSelector(getAllDrivesSelector);
-  const isUpdateSuccessful = useSelector(getUpdateSuccessfulSelector);
-  const isLoggedIn = useSelector(getUserIsLoggedIn);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isUpdateSuccessful) {
-      navigate("/");
-      dispatch(setUpdateSuccessful(false));
+    if (drive) {
+      setValue("shipmentDate", dayjs(drive.shipmentDate));
+      setValue("unloadingDate", dayjs(drive.unloadingDate));
+      setValue("carrier", drive.carrier);
+      setValue("client", drive.client);
+      setValue("departurePoint", drive.departurePoint);
+      setValue("arrivalPoint", drive.arrivalPoint);
+      setValue("vehicleData", drive.vehicleData);
     }
-  }, [dispatch, isUpdateSuccessful, navigate]);
-
-  useEffect(() => {
-    if (isLoggedIn && driveId) dispatch(getDriveById(driveId));
-  }, [dispatch, driveId, isLoggedIn]);
-
-  useEffect(() => {
-    if (drives[0]) {
-      // setValue("shipmentDate", getDateFromUtc(drives[0].shipmentDate));
-      // setValue("unloadingDate", getDateFromUtc(drives[0].unloadingDate));
-
-      setValue("shipmentDate", dayjs(drives[0].shipmentDate));
-      setValue("unloadingDate", dayjs(drives[0].unloadingDate));
-      setValue("carrier", drives[0].carrier);
-      setValue("client", drives[0].client);
-      setValue("departurePoint", drives[0].departurePoint);
-      setValue("arrivalPoint", drives[0].arrivalPoint);
-      setValue("vehicleData", drives[0].vehicleData);
-    }
-  }, [drives, setValue]);
+  }, [drive, setValue]);
 
   const onFormSubmit = (data) => {
-    if (driveId)
-      dispatch(
-        updateDrive({
-          driveId,
-          shipmentDate: setDateForQuerySearch(data.shipmentDate),
-          unloadingDate: setDateForQuerySearch(data.unloadingDate),
-          carrier: data.carrier,
-          client: data.client,
-          departurePoint: data.departurePoint,
-          arrivalPoint: data.arrivalPoint,
-          vehicleData: data.vehicleData,
-        })
-      );
-    else
-      dispatch(
-        addDrive({
-          ...data,
-          shipmentDate: setDateForQuerySearch(data.shipmentDate),
-          unloadingDate: setDateForQuerySearch(data.unloadingDate),
-        })
-      );
-    // console.log(data.shipmentDate);
-    // console.log(setDateForQuerySearch(data.shipmentDate));
+    onSetFirstStep({
+      ...data,
+      shipmentDate: setDateForQuerySearch(data.shipmentDate),
+      unloadingDate: setDateForQuerySearch(data.unloadingDate),
+    });
   };
 
   const toggleModalClientsList = () => {
@@ -119,7 +66,7 @@ const DriveItemForm = () => {
   const toggleModalDeleteAlert = () => {
     setIsModalDeleteAlertOpen(!isModalDeleteAlertOpen);
     document.getElementById("deletedrivebtn").blur();
-  }
+  };
 
   const onSelectClient = (name) => {
     setValue("client", name);
@@ -127,7 +74,6 @@ const DriveItemForm = () => {
 
   return (
     <FormWrap>
-      <FormName>Drive details</FormName>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <ul>
           <FormItem>
@@ -293,27 +239,18 @@ const DriveItemForm = () => {
         </ul>
 
         <BtnWrap>
-          <SubmitFormBtn type="submit">Save</SubmitFormBtn>
-          <DeleteBtn
+          <button>Back</button>
+          <SubmitFormBtn type="submit">Next</SubmitFormBtn>
+
+          {/* <DeleteBtn
             id="deletedrivebtn"
             type="button"
             onClick={() => setIsModalDeleteAlertOpen(true)}
           >
             Delete
-          </DeleteBtn>
+          </DeleteBtn> */}
         </BtnWrap>
       </form>
-
-      {!isEditEnabled && driveId && (
-        <EditBtnWrap>
-          <EditBtn
-            type="button"
-            onClick={() => setIsEditEnabled((state) => !state)}
-          >
-            <BorderColorIcon sx={{ color: "white" }} />
-          </EditBtn>
-        </EditBtnWrap>
-      )}
 
       {isModalClientsListOpen && (
         <ModalPort toggleModal={toggleModalClientsList}>
@@ -333,8 +270,11 @@ const DriveItemForm = () => {
   );
 };
 
-// DriveItemForm.propTypes = {
-//   drive: PropTypes.object.isRequired,
-// };
+DriveItemFormFirst.propTypes = {
+  isEditEnabled: PropTypes.bool.isRequired,
+  drive: PropTypes.object.isRequired,
+  driveId: PropTypes.string.isRequired,
+  onSetFirstStep: PropTypes.func.isRequired,
+};
 
-export default DriveItemForm;
+export default DriveItemFormFirst;

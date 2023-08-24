@@ -6,8 +6,10 @@ import { getClientsByQuery } from "../../../redux/clients/clientsThunks";
 import { getAllClientsSelector } from "../../../redux/clients/clientsSelectors";
 import {
   ModalWrap,
+  ClientsContainer,
   HeadList,
   HedItem,
+  HeadName,
   ClientsList,
   ClientsItem,
   ClientsName,
@@ -19,7 +21,6 @@ const ModalClientsList = ({ toggleModal, onSelectClient }) => {
 
   useEffect(() => {
     dispatch(getClientsByQuery(""));
-    // document.getElementsByTagName("div").click();
   }, [dispatch]);
     
     const onSelectItem = (name) => {
@@ -31,34 +32,41 @@ const ModalClientsList = ({ toggleModal, onSelectClient }) => {
     <ModalWrap>
       <CloseIcon
         onClick={toggleModal}
-        sx={{ cursor: "pointer", display: "block", marginLeft: "auto" }}
+        sx={{
+          cursor: "pointer",
+          display: "block",
+          marginLeft: "auto",
+          marginBottom: "16px",
+        }}
       />
 
-      <HeadList>
-        <HedItem>
-          <p>Code</p>
-        </HedItem>
-        <HedItem>
-          <p>Name</p>
-        </HedItem>
-        <HedItem>
-          <p>Comments</p>
-        </HedItem>
-      </HeadList>
+      <ClientsContainer>
+        <HeadList>
+          <HedItem>
+            <HeadName>Code</HeadName>
+          </HedItem>
+          <HedItem>
+            <HeadName>Name</HeadName>
+          </HedItem>
+          <HedItem>
+            <HeadName>Comments</HeadName>
+          </HedItem>
+        </HeadList>
 
-      <ClientsList>
-        {allClients &&
-          allClients.map((client) => (
-            <ClientsItem
-              key={client._id}
-              onClick={() => onSelectItem(client.name)}
-            >
-              <ClientsName>{client.code}</ClientsName>
-              <ClientsName>{client.name}</ClientsName>
-              <ClientsName>{client.comments}</ClientsName>
-            </ClientsItem>
-          ))}
-      </ClientsList>
+        <ClientsList>
+          {allClients &&
+            allClients.map((client) => (
+              <ClientsItem
+                key={client._id}
+                onClick={() => onSelectItem(client.name)}
+              >
+                <ClientsName>{client.code}</ClientsName>
+                <ClientsName>{client.name}</ClientsName>
+                <ClientsName>{client.comments}</ClientsName>
+              </ClientsItem>
+            ))}
+        </ClientsList>
+      </ClientsContainer>
     </ModalWrap>
   );
 };

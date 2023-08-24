@@ -10,7 +10,10 @@ import {userLogout} from "../auth/authThunks"
 
 const initialState = {
   updateSuccessful: false,
-  items: {},
+  items: {
+    total: null,
+    allDrives: [],
+  },
   isLoading: false,
   error: null,
 };
@@ -63,13 +66,15 @@ export const drivesSlice = createSlice({
         (state, action) => {
           state.isLoading = false;
           state.error = null;
-          state.items = action.payload;
+          state.items.total = action.payload.total;
+          state.items.allDrives = action.payload.allDrives;
         }
       )
       .addMatcher(isAnyOf(getDriveById.fulfilled), (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = [action.payload];
+        state.items.total = 1;
+        state.items.allDrives = action.payload;
       })
       .addMatcher(isAnyOf(addDrive.fulfilled), (state,) => {
         state.isLoading = false;

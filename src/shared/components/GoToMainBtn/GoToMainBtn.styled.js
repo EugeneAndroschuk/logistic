@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const GoBackBtn = styled(Link)`
+export const GoToMainBtnStyled = styled(Link)`
   text-decoration: none;
 
   display: flex;

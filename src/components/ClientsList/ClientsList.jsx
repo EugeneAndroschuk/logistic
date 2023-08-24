@@ -1,6 +1,7 @@
 
-
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getClientsByQuery } from "../../redux/clients/clientsThunks";
 import { getAllClientsSelector } from "../../redux/clients/clientsSelectors";
 import Client from "../ClientItem/ClientItem";
 
@@ -13,8 +14,13 @@ import {
   ClientItemWrap,
 } from "./ClientsList.styled";
 
-const ClientList = () => {
+const ClientsList = () => {
   const { allClients } = useSelector(getAllClientsSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => { 
+    dispatch(getClientsByQuery(""));
+  }, [dispatch]);
 
   return (
     <ClientListWrap>
@@ -41,4 +47,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default ClientsList;

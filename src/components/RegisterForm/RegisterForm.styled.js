@@ -28,15 +28,22 @@ export const FormStyled = styled.form`
 export const FormTitleStyled = styled.h1`
   font-size: 36px;
   line-height: 1.37;
-  font-weight: 500;
+  font-weight: 700;
+  color: rgb(219, 167, 22);
   text-align: center;
   margin-bottom: 20px;
 `;
 
+export const LabelStyled = styled.label`
+font-weight: 700;
+margin-bottom: 5px;
+`;
+
 export const InpuStyled = styled.input`
+outline: none;
   width: 458px;
   height: 48px;
-  border: 2px solid #54adff;
+  border: 2px solid rgb(219, 167, 22);
   border-radius: 40px;
   padding: 12px 16px;
 `;
@@ -48,17 +55,18 @@ align-items: center;
 `;
 
 export const ItemStyled = styled.li`
+position: relative;
 display: flex;
 flex-direction: column;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 `;
 
 export const SubmitBtnStyled = styled.button`
   width: 458px;
   height: 48px;
-  border: 2px solid #54adff;
+  border: 2px solid rgb(219, 167, 22);
   border-radius: 40px;
-  background-color: #54adff;
+  background-color: rgb(219, 167, 22);
   padding: 0px 16px;
   margin-left: auto;
   margin-right: auto;
@@ -73,7 +81,8 @@ export const SubmitBtnStyled = styled.button`
 
   &:hover,
   &:focus {
-    background: linear-gradient(90deg, #9bd0ff, #419ef1);
+    background: linear-gradient(90deg, rgb(250, 196, 73), rgb(219, 167, 22));
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
   }
 `;
 
@@ -85,8 +94,9 @@ export const GoogleBtn = styled.a`
   height: 48px
   padding: 0;
   border-radius: 40px;
-  border: 2px solid #888;
-  box-shadow: 1px 1px 1px #888;
+  border: 2px solid white;
+  background-color: white;
+
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 16px;
@@ -96,8 +106,8 @@ export const GoogleBtn = styled.a`
   font-weight: 600;
 
   &:hover {
-    border: 2px solid #54adff;
-    box-shadow: 1px 1px 1px #54adff;
+    border: 2px solid white;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
   }
 `;
 
@@ -111,7 +121,7 @@ export const GoogleIcon = styled.div`
 `;
 
 export const TextStyled = styled.p`
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.37;
   font-weight: 400;
   margin-left: auto;
@@ -119,9 +129,15 @@ export const TextStyled = styled.p`
 `;
 
 export const LinkStyled = styled(Link)`
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.37;
   font-weight: 600;
-  color: #54adff;
+  color: rgb(219, 167, 22);
   margin-left: 8px;
+`;
+
+export const ErrorMsg = styled.p`
+  position: absolute;
+  top: 70px;
+  color: orange;
 `;

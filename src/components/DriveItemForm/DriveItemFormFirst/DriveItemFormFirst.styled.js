@@ -1,24 +1,14 @@
 import styled from "styled-components";
 
 export const FormWrap = styled.div`
-position: relative;
+  position: relative;
 
-margin-left: auto;
-margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 
-width: 850px;
-padding: 16px;
-border: 1px solid white;
-`;
-
-export const FormName = styled.h1`
-  font-size: 26px;
-  font-weight: 700;
-  color: white;
-
-  text-align: center;
-
-  margin-bottom: 20px;
+  width: 750px;
+//   padding: 16px;
+  border: 1px solid white;
 `;
 
 export const FormItem = styled.li`
@@ -31,7 +21,7 @@ export const FormItem = styled.li`
 
 export const Label = styled.label`
   display: inline-block;
-  width: 156px;
+  width: 150px;
   font-size: 16px;
   font-weight: 700;
   color: white;
@@ -42,7 +32,7 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-outline: none;
+  outline: none;
   width: 600px;
   padding: 8px;
   color: ${(props) => props.$color};
@@ -98,8 +88,6 @@ export const SubmitFormBtn = styled.button`
   }
 `;
 
-
-
 export const DeleteBtn = styled.button`
   width: 200px;
 
@@ -124,15 +112,4 @@ export const DeleteBtn = styled.button`
     color: black;
     background-color: rgba(255, 255, 255, 0.8);
   }
-`;
-
-export const EditBtnWrap = styled.div`
-position: absolute;
-top: 8px;
-right: 8px;
-`;
-
-export const EditBtn = styled.button`
-background-color: inherit;
-border: none;
 `;

@@ -1,26 +1,17 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const DropMenu = styled.div`
-  position: absolute;
-  top: 0;
-  right: -24px;
+// export const DropMenu = styled.div`
+//   position: absolute;
+//   top: 0;
+//   right: -24px;
 
-  visibility: hidden;
-  pointer-events: none;
-`;
+//   visibility: hidden;
+//   pointer-events: none;
+// `;
 
 export const DriveWrap = styled.div`
   position: relative;
-  // overflow: hidden;
-
-  &:hover,
-  &:focus {
-    ${DropMenu} {
-      visibility: visible;
-      pointer-events: all;
-    }
-  }
 `;
 
 
@@ -59,11 +50,11 @@ export const DriveName = styled.p`
 
 
 
-export const DeleteBtn = styled.img`
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  &:hover, &:focus {
-    scale: 1.2;
-  }
-`;
+// export const DeleteBtn = styled.img`
+//   width: 24px;
+//   height: 24px;
+//   cursor: pointer;
+//   &:hover, &:focus {
+//     scale: 1.2;
+//   }
+// `;

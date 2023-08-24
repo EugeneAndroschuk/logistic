@@ -9,16 +9,14 @@ import {
   DriveList,
   DriveItem,
   DriveName,
-  DropMenu,
-  DeleteBtn,
 } from "./DriveItemShort.styled";
 
 const Drive = ({ drive }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const onPressDelete = () => {
-    dispatch(deleteDrive(drive._id));
-  };
+  // const onPressDelete = () => {
+  //   dispatch(deleteDrive(drive._id));
+  // };
 
   return (
     <DriveWrap>
@@ -50,9 +48,9 @@ const Drive = ({ drive }) => {
           </DriveItem>
         </DriveList>
       </DriveLinkWrap>
-      <DropMenu>
+      {/* <DropMenu>
         <DeleteBtn src={deleteImg} onClick={onPressDelete} />
-      </DropMenu>
+      </DropMenu> */}
     </DriveWrap>
   );
 };

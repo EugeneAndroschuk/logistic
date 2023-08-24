@@ -2,16 +2,17 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { userRefresh } from "./redux/auth/authThunks";
+import SharedLayout from "./shared/components/SharedLayout/SharedLayout";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import MainPage from "./pages/MainPage/MainPage";
-import AddDrivePage from "./pages/AddDrivePage/AddDrivePage";
-import AddClientPage from "./pages/AddClientPage/AddClientPage";
-import DriveDetailsPage from "./pages/DriveDetailsPage/DriveDetailsPage";
-import SharedLayout from "./shared/components/SharedLayout/SharedLayout";
+import DrivesPage from "./pages/DrivesPage/DrivesPage";
+import ClientsPage from "./pages/ClientsPage/ClientsPage";
+import DriveItemFormMain from "./components/DriveItemForm/DriveItemFormMain/DriveItemFormMain";
+import ClientItemForm from "./components/ClientItemForm/ClientItemForm";
+import ClientsList from "./components/ClientsList/ClientsList";
 import LoginForm from "./components/LoginForm/LoginForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
-import ClientsPage from "./pages/ClientsPage/ClientsPage";
-import ClientDetailsPage from "./pages/ClientDetailsPage/ClientDetailsPage";
+
 import RestrictedRoute from "./pages/routes/RestrictedRoute";
 import PrivateRoute from "./pages/routes/PrivateRoute";
 
@@ -22,24 +23,38 @@ const routes = [
     children: [
       { index: true, element: <PrivateRoute component={MainPage} /> },
       {
-        path: "/drives/:driveId",
-        element: <PrivateRoute component={DriveDetailsPage} />,
+        path: "/drives",
+        element: <PrivateRoute component={DrivesPage} />,
+        children: [
+          {
+            path: "/drives/:driveId",
+            element: <PrivateRoute component={DriveItemFormMain} />,
+          },
+          {
+            path: "/drives/add",
+            element: <PrivateRoute component={DriveItemFormMain} />,
+          },
+        ],
       },
-      {
-        path: "/adddrive",
-        element: <PrivateRoute component={AddDrivePage} />,
-      },
+
       {
         path: "/clients",
         element: <PrivateRoute component={ClientsPage} />,
-      },
-      {
-        path: "/clients/:clientId",
-        element: <PrivateRoute component={ClientDetailsPage} />,
-      },
-      {
-        path: "/addclient",
-        element: <PrivateRoute component={AddClientPage} />,
+        children: [
+          {
+            index: true,
+            path: "/clients",
+            element: <PrivateRoute component={ClientsList} />,
+          },
+          {
+            path: "/clients/:clientId",
+            element: <PrivateRoute component={ClientItemForm} />,
+          },
+          {
+            path: "/clients/add",
+            element: <PrivateRoute component={ClientItemForm} />,
+          },
+        ],
       },
     ],
   },

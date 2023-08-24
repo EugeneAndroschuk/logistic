@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { userLogIn } from "../../redux/auth/authThunks";
 import {
   FormWrap,
   FormStyled,
   FormTitleStyled,
+  LabelStyled,
   InpuStyled,
   ListStyled,
   ItemStyled,
@@ -14,6 +15,7 @@ import {
   GoogleIcon,
   TextStyled,
   LinkStyled,
+  ErrorMsg,
 } from "./LoginForm.styled";
 
 const LoginForm = () => {
@@ -21,8 +23,11 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
+  const password = useRef({});
+  password.current = watch("password", "");
 
   const onSubmitForm = (data) => {
     const { email, password } = data;
@@ -35,25 +40,44 @@ const LoginForm = () => {
         <FormTitleStyled>Login</FormTitleStyled>
         <ListStyled>
           <ItemStyled>
-            <label>Email</label>
+            <LabelStyled htmlFor="email">Email</LabelStyled>
             <InpuStyled
+              type="email"
               {...register("email", { required: true })}
               placeholder={"Email"}
             />
           </ItemStyled>
           <ItemStyled>
-            <label>Password</label>
+            <LabelStyled htmlFor="password">Password</LabelStyled>
             <InpuStyled
-              {...register("password", { required: true })}
+              type="password"
+              {...register("password", {
+                required: "You must specify a password",
+                minLength: {
+                  value: 6,
+                  message: "Password must have at least 6 characters",
+                },
+              })}
               placeholder={"Password"}
             />
+            {errors.password && <ErrorMsg>{errors.password.message}</ErrorMsg>}
           </ItemStyled>
           <ItemStyled>
-            <label>Confirm password</label>
+            <LabelStyled htmlFor="confirmPassword">
+              Confirm password
+            </LabelStyled>
             <InpuStyled
-              {...register("confirmPassword", { required: true })}
+              type="password"
+              {...register("confirmPassword", {
+                required: true,
+                validate: (value) =>
+                  value === password.current || "The passwords do not match",
+              })}
               placeholder={"Confirm password"}
             />
+            {errors.confirmPassword && (
+              <ErrorMsg>{errors.confirmPassword.message}</ErrorMsg>
+            )}
           </ItemStyled>
         </ListStyled>
         <SubmitBtnStyled type="submit">Login</SubmitBtnStyled>
