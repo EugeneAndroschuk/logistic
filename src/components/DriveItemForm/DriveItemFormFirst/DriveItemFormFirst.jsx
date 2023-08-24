@@ -239,7 +239,6 @@ const DriveItemFormFirst = ({
         </ul>
 
         <BtnWrap>
-          <button>Back</button>
           <SubmitFormBtn type="submit">Next</SubmitFormBtn>
 
           {/* <DeleteBtn
@@ -273,7 +272,7 @@ const DriveItemFormFirst = ({
 DriveItemFormFirst.propTypes = {
   isEditEnabled: PropTypes.bool.isRequired,
   drive: PropTypes.object.isRequired,
-  driveId: PropTypes.string.isRequired,
+  driveId: PropTypes.string,
   onSetFirstStep: PropTypes.func.isRequired,
 };
 

@@ -43,6 +43,7 @@ export const addDrive = createAsyncThunk(
   "drives/addDrive",
   async (credentials, thunkAPI) => {
     try {
+      console.log(credentials);
       await axiosPrivate.post("/api/drives", credentials);
       // return response.data;
     } catch (e) {

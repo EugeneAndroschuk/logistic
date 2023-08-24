@@ -17,6 +17,7 @@ import ModalPort from "../../../shared/components/ModalPort/ModalPort";
 import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
 import DriveItemFormFirst from "../DriveItemFormFirst/DriveItemFormFirst";
 import DriveItemFormSecond from "../DriveItemFormSecond/DriveItemFormSecond";
+import DriveItemFormThird from "../DriveItemFormThird/DriveItemFormThird";
 import {
   DriveFormWrap,
   DriveFormName,
@@ -37,7 +38,16 @@ const DriveItemFormMain = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (allDrives.length === 1) setFormData(...allDrives);
+    if (allDrives.length === 1) {
+      const newObj = {};
+      const keys = Object.keys(allDrives[0]);
+      keys.forEach((key) => {
+        if ((key !== "owner") && (key !== "_id")) newObj[`${key}`] = allDrives[0][`${key}`];
+      });
+      setFormData({ ...newObj });
+    }
+
+    // setFormData({ key: allDrives[0][`${key}`] })
   }, [allDrives]);
 
   useEffect(() => {
@@ -63,6 +73,11 @@ const DriveItemFormMain = () => {
     setStep((prev) => prev + 1);
   };
 
+  const onSetBackStep = (data) => {
+    if(step === 3) setFormData((prev) => ({ ...prev, ...data }));
+    setStep(prev => prev - 1);
+  }
+
   const toggleModalDeleteAlert = () => {
     setIsModalDeleteAlertOpen(!isModalDeleteAlertOpen);
     document.getElementById("deletedrivebtn").blur();
@@ -87,6 +102,16 @@ const DriveItemFormMain = () => {
           drive={formData}
           driveId={driveId}
           onSetSecondStep={onSetSecondStep}
+          onSetBackStep={onSetBackStep}
+        />
+      )}
+
+      {step === 3 && (
+        <DriveItemFormThird
+          isEditEnabled={isEditEnabled}
+          drive={formData}
+          driveId={driveId}
+          onSetBackStep={onSetBackStep}
         />
       )}
 
