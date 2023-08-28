@@ -8,6 +8,7 @@ import ModalClientsList from "../../../shared/components/ModalClientsList/ModalC
 import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
 import {
   FormWrap,
+  FormListWrap,
   FormItem,
   Label,
   Input,
@@ -73,61 +74,64 @@ const DriveItemFormThird = ({
   return (
     <FormWrap>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <ul>
-          <FormItem>
-            <Label>Carrier cost</Label>
-            <Input
-              {...register("carrierCost", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Client cost</Label>
-            <Input
-              {...register("clientCost", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Client VAT</Label>
-            <Input
-              {...register("clientVat", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Client total cost</Label>
-            <Input
-              {...register("clientTotalCost", {
-                required: true,
-                validate: (value) =>
-                  !isNaN(value) || "must be a number",
-              })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-            {errors.clientTotalCost && <p>{errors.clientTotalCost.message}</p>}
-          </FormItem>
-        </ul>
+        <FormListWrap>
+          <ul>
+            <FormItem>
+              <Label>Carrier cost</Label>
+              <Input
+                {...register("carrierCost", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Client cost</Label>
+              <Input
+                {...register("clientCost", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Client VAT</Label>
+              <Input
+                {...register("clientVat", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Client total cost</Label>
+              <Input
+                {...register("clientTotalCost", {
+                  required: true,
+                  validate: (value) => !isNaN(value) || "must be a number",
+                })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+              {errors.clientTotalCost && (
+                <p>{errors.clientTotalCost.message}</p>
+              )}
+            </FormItem>
+          </ul>
+        </FormListWrap>
 
         <BtnWrap>
           <GoBackBtn onClick={onHandleBackBtn}>Back</GoBackBtn>
@@ -143,20 +147,20 @@ const DriveItemFormThird = ({
         </BtnWrap>
       </form>
 
-      {isModalClientsListOpen && (
+      {/* {isModalClientsListOpen && (
         <ModalPort toggleModal={toggleModalClientsList}>
           <ModalClientsList
             toggleModal={toggleModalClientsList}
             onSelectClient={onSelectClient}
           />
         </ModalPort>
-      )}
+      )} */}
 
-      {isModalDeleteAlertOpen && (
+      {/* {isModalDeleteAlertOpen && (
         <ModalPort toggleModal={toggleModalDeleteAlert}>
           <ModalDeleteAlert toggleModal={toggleModalDeleteAlert} id={driveId} />
         </ModalPort>
-      )}
+      )} */}
     </FormWrap>
   );
 };

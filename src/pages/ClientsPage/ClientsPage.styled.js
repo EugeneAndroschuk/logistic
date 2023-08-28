@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const AddDriveBtn = styled(Link)`
+export const AddClientBtn = styled(Link)`
   position: absolute;
   right: 10px;
   bottom: 50px;

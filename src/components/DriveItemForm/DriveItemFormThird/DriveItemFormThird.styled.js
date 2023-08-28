@@ -7,8 +7,10 @@ export const FormWrap = styled.div`
   margin-right: auto;
 
   width: 750px;
-  //   padding: 16px;
-  border: 1px solid white;
+`;
+
+export const FormListWrap = styled.div`
+  height: 310px;
 `;
 
 export const FormItem = styled.li`

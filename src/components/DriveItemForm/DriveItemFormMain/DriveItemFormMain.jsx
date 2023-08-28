@@ -21,6 +21,10 @@ import DriveItemFormThird from "../DriveItemFormThird/DriveItemFormThird";
 import {
   DriveFormWrap,
   DriveFormName,
+  StepWrap,
+  StepList,
+  StepItem,
+  StepName,
   EditBtnWrap,
   EditBtn,
 } from "./DriveItemFormMain.styled";
@@ -46,8 +50,6 @@ const DriveItemFormMain = () => {
       });
       setFormData({ ...newObj });
     }
-
-    // setFormData({ key: allDrives[0][`${key}`] })
   }, [allDrives]);
 
   useEffect(() => {
@@ -64,8 +66,6 @@ const DriveItemFormMain = () => {
   const onSetFirstStep = (data) => {
     setFormData((prev) => ({ ...prev, ...data }));
     setStep((prev) => prev + 1);
-    // if (driveId) dispatch(updateDrive({ ...data, driveId }));
-    // else dispatch(addDrive(data));
   };
 
   const onSetSecondStep = (data) => {
@@ -86,6 +86,19 @@ const DriveItemFormMain = () => {
   return (
     <DriveFormWrap>
       <DriveFormName>Drive details</DriveFormName>
+      <StepWrap>
+        <StepList>
+          <StepItem isActive={step === 1 ? true : false}>
+            <StepName>Common info</StepName>
+          </StepItem>
+          <StepItem isActive={step === 2 ? true : false}>
+            <StepName>Carrier info</StepName>
+          </StepItem>
+          <StepItem isActive={step === 3 ? true : false}>
+            <StepName>Cost info</StepName>
+          </StepItem>
+        </StepList>
+      </StepWrap>
 
       {step === 1 && (
         <DriveItemFormFirst
@@ -126,11 +139,11 @@ const DriveItemFormMain = () => {
         </EditBtnWrap>
       )}
 
-      {isModalDeleteAlertOpen && (
+      {/* {isModalDeleteAlertOpen && (
         <ModalPort toggleModal={toggleModalDeleteAlert}>
           <ModalDeleteAlert toggleModal={toggleModalDeleteAlert} id={driveId} />
         </ModalPort>
-      )}
+      )} */}
     </DriveFormWrap>
   );
 };

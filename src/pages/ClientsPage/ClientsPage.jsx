@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 import { getClientsByQuery } from "../../redux/clients/clientsThunks";
 import Container from "../../styles/Container";
-import { GoBackBtn, AddDriveBtn } from "./ClientsPage.styled";
+import { GoBackBtn, AddClientBtn } from "./ClientsPage.styled";
 
 const ClientsPage = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const ClientsPage = () => {
           {!isClientsPage && <GoBackBtn to="/clients">go Back</GoBackBtn>}
           <Outlet />
           {isClientsPage && (
-            <AddDriveBtn to="/clients/add">ADD CLIENT</AddDriveBtn>
+            <AddClientBtn to="/clients/add">ADD CLIENT</AddClientBtn>
           )}
         </Container>
       </div>

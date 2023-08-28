@@ -55,7 +55,7 @@ export const deleteClient = createAsyncThunk(
   "clients/deleteClient",
   async (clientId, thunkAPI) => {
     try {
-      await axiosPrivate.delete(`/api/client/${clientId}`);
+      await axiosPrivate.delete(`/api/clients/${clientId}`);
       // return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

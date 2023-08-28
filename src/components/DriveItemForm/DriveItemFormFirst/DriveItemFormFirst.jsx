@@ -13,6 +13,7 @@ import ModalClientsList from "../../../shared/components/ModalClientsList/ModalC
 import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
 import {
   FormWrap,
+  FormListWrap,
   FormItem,
   Label,
   Input,
@@ -75,179 +76,180 @@ const DriveItemFormFirst = ({
   return (
     <FormWrap>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <ul>
-          <FormItem>
-            <Label>Shipment date</Label>
-            <Controller
-              name="shipmentDate"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    disableFuture
-                    value={dayjs(value)}
-                    onChange={onChange}
-                    format="DD.MM.YYYY"
-                    sx={{
-                      width: "600px",
-                      backgroundColor:
-                        (isEditEnabled && driveId) ||
-                        (!isEditEnabled && !driveId)
-                          ? "white"
-                          : "rgba(239, 239, 239, 0.3)",
-                      borderRadius: "10px",
-                      "& input": {
-                        color:
+        <FormListWrap>
+          <ul>
+            <FormItem>
+              <Label>Shipment date</Label>
+              <Controller
+                name="shipmentDate"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disableFuture
+                      value={dayjs(value)}
+                      onChange={onChange}
+                      format="DD.MM.YYYY"
+                      sx={{
+                        width: "600px",
+                        backgroundColor:
                           (isEditEnabled && driveId) ||
                           (!isEditEnabled && !driveId)
-                            ? "black"
-                            : "white",
-                        padding: "8px",
-                        fontSize: "13px",
-                      },
-                      "& svg": {
-                        color:
-                          (isEditEnabled && driveId) ||
-                          (!isEditEnabled && !driveId)
-                            ? "black"
-                            : "white",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              )}
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Unloading date</Label>
+                            ? "white"
+                            : "rgba(239, 239, 239, 0.3)",
+                        borderRadius: "10px",
+                        "& input": {
+                          color:
+                            (isEditEnabled && driveId) ||
+                            (!isEditEnabled && !driveId)
+                              ? "black"
+                              : "white",
+                          padding: "8px",
+                          fontSize: "13px",
+                        },
+                        "& svg": {
+                          color:
+                            (isEditEnabled && driveId) ||
+                            (!isEditEnabled && !driveId)
+                              ? "black"
+                              : "white",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Unloading date</Label>
 
-            <Controller
-              name="unloadingDate"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    disableFuture
-                    value={dayjs(value)}
-                    onChange={onChange}
-                    format="DD.MM.YYYY"
-                    sx={{
-                      width: "600px",
-                      backgroundColor:
-                        (isEditEnabled && driveId) ||
-                        (!isEditEnabled && !driveId)
-                          ? "white"
-                          : "rgba(239, 239, 239, 0.3)",
-                      borderRadius: "10px",
-                      "& input": {
-                        color:
+              <Controller
+                name="unloadingDate"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disableFuture
+                      value={dayjs(value)}
+                      onChange={onChange}
+                      format="DD.MM.YYYY"
+                      sx={{
+                        width: "600px",
+                        backgroundColor:
                           (isEditEnabled && driveId) ||
                           (!isEditEnabled && !driveId)
-                            ? "black"
-                            : "white",
-                        padding: "8px",
-                        fontSize: "13px",
-                      },
-                      "& svg": {
-                        color:
-                          (isEditEnabled && driveId) ||
-                          (!isEditEnabled && !driveId)
-                            ? "black"
-                            : "white",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
+                            ? "white"
+                            : "rgba(239, 239, 239, 0.3)",
+                        borderRadius: "10px",
+                        "& input": {
+                          color:
+                            (isEditEnabled && driveId) ||
+                            (!isEditEnabled && !driveId)
+                              ? "black"
+                              : "white",
+                          padding: "8px",
+                          fontSize: "13px",
+                        },
+                        "& svg": {
+                          color:
+                            (isEditEnabled && driveId) ||
+                            (!isEditEnabled && !driveId)
+                              ? "black"
+                              : "white",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Carrier</Label>
+              <Input
+                {...register("carrier", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Client</Label>
+              <Input
+                {...register("client", { required: true })}
+                disabled={true}
+                // disabled={!isEditEnabled ? driveId : false}
+                $bgdcolor={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "white"
+                    : "rgba(239, 239, 239, 0.3)"
+                }
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+              {((isEditEnabled && driveId) || (!isEditEnabled && !driveId)) && (
+                <ClientListBtn
+                  id="clientlistbtn"
+                  type="button"
+                  onClick={() => toggleModalClientsList()}
+                >
+                  <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
+                </ClientListBtn>
               )}
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Carrier</Label>
-            <Input
-              {...register("carrier", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Client</Label>
-            <Input
-              {...register("client", { required: true })}
-              disabled={true}
-              // disabled={!isEditEnabled ? driveId : false}
-              $bgdcolor={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "white"
-                  : "rgba(239, 239, 239, 0.3)"
-              }
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-            {((isEditEnabled && driveId) || (!isEditEnabled && !driveId)) && (
-              <ClientListBtn
-                id="clientlistbtn"
-                type="button"
-                onClick={() => toggleModalClientsList()}
-              >
-                <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
-              </ClientListBtn>
-            )}
-          </FormItem>
-          <FormItem>
-            <Label>Departure point</Label>
-            <Input
-              {...register("departurePoint", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Arrival point</Label>
-            <Input
-              {...register("arrivalPoint", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Vehicle data</Label>
-            <Input
-              {...register("vehicleData", { required: true })}
-              disabled={!isEditEnabled ? driveId : false}
-              $color={
-                (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
-                  ? "black"
-                  : "white"
-              }
-            />
-          </FormItem>
-        </ul>
+            </FormItem>
+            <FormItem>
+              <Label>Departure point</Label>
+              <Input
+                {...register("departurePoint", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Arrival point</Label>
+              <Input
+                {...register("arrivalPoint", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Label>Vehicle data</Label>
+              <Input
+                {...register("vehicleData", { required: true })}
+                disabled={!isEditEnabled ? driveId : false}
+                $color={
+                  (isEditEnabled && driveId) || (!isEditEnabled && !driveId)
+                    ? "black"
+                    : "white"
+                }
+              />
+            </FormItem>
+          </ul>
+        </FormListWrap>
 
         <BtnWrap>
-          <SubmitFormBtn type="submit">Next</SubmitFormBtn>
-
-          {/* <DeleteBtn
+          <DeleteBtn
             id="deletedrivebtn"
             type="button"
             onClick={() => setIsModalDeleteAlertOpen(true)}
           >
             Delete
-          </DeleteBtn> */}
+          </DeleteBtn>
+          <SubmitFormBtn type="submit">Next</SubmitFormBtn>
         </BtnWrap>
       </form>
 
@@ -262,7 +264,7 @@ const DriveItemFormFirst = ({
 
       {isModalDeleteAlertOpen && (
         <ModalPort toggleModal={toggleModalDeleteAlert}>
-          <ModalDeleteAlert toggleModal={toggleModalDeleteAlert} id={driveId} />
+          <ModalDeleteAlert toggleModal={toggleModalDeleteAlert} itemId={{driveId, clientId: null}} />
         </ModalPort>
       )}
     </FormWrap>

@@ -11,6 +11,8 @@ import {
   addClient,
 } from "../../redux/clients/clientsThunks";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import ModalPort from "../../shared/components/ModalPort/ModalPort";
+import ModalDeleteAlert from "../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
 import {
   FormWrap,
   FormName,
@@ -20,11 +22,13 @@ import {
   SubmitFormBtn,
   EditBtnWrap,
   EditBtn,
+  BtnWrap,
+  DeleteBtn,
 } from "./ClientItemForm.styled";
 
 const ClientItemForm = () => {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
-//   const [isFormSubmited, setIsFormSubmited] = useState(false);
+const [isModalDeleteAlertOpen, setIsModalDeleteAlertOpen] = useState(false);
   const { clientId } = useParams();
   const dispatch = useDispatch();
   const {
@@ -72,6 +76,11 @@ const ClientItemForm = () => {
     // setIsFormSubmited(true);
   };
 
+   const toggleModalDeleteAlert = () => {
+     setIsModalDeleteAlertOpen(!isModalDeleteAlertOpen);
+     document.getElementById("deletedrivebtn").blur();
+   };
+
   return (
     <FormWrap>
       <FormName>Client details</FormName>
@@ -115,7 +124,16 @@ const ClientItemForm = () => {
           </FormItem>
         </ul>
 
-        <SubmitFormBtn type="submit">Save</SubmitFormBtn>
+        <BtnWrap>
+          <DeleteBtn
+            id="deletedrivebtn"
+            type="button"
+            onClick={() => setIsModalDeleteAlertOpen(true)}
+          >
+            Delete
+          </DeleteBtn>
+          <SubmitFormBtn type="submit">Save</SubmitFormBtn>
+        </BtnWrap>
       </form>
 
       {!isEditEnabled && clientId && (
@@ -127,6 +145,15 @@ const ClientItemForm = () => {
             <BorderColorIcon sx={{ color: "white" }} />
           </EditBtn>
         </EditBtnWrap>
+      )}
+
+      {isModalDeleteAlertOpen && (
+        <ModalPort toggleModal={toggleModalDeleteAlert}>
+          <ModalDeleteAlert
+            toggleModal={toggleModalDeleteAlert}
+            itemId={{ clientId, driveId: null }}
+          />
+        </ModalPort>
       )}
     </FormWrap>
   );

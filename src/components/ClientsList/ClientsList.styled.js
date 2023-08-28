@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 
 export const ClientListWrap = styled.div`
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
+  height: 570px;
 `;
 
 export const ClientListHeader = styled.ul`
@@ -42,4 +43,9 @@ export const ClientListBody = styled.ul`
 
 export const ClientItemWrap = styled.li`
   height: 100%;
+`;
+
+export const PaginationWrap = styled.div`
+  display: flex;
+  justify-content: center;
 `;
