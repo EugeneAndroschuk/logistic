@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import ModalPort from "../../../shared/components/ModalPort/ModalPort";
 import ModalClientsList from "../../../shared/components/ModalClientsList/ModalClientsList";
 import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
+import ModalFindCity from "../../../shared/components/ModalFindCity/MadalFindCity";
 import {
   FormWrap,
   FormListWrap,
@@ -18,6 +19,7 @@ import {
   Label,
   Input,
   ClientListBtn,
+  FindCityBtn,
   BtnWrap,
   SubmitFormBtn,
   DeleteBtn,
@@ -31,6 +33,7 @@ const DriveItemFormFirst = ({
 }) => {
   const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
   const [isModalDeleteAlertOpen, setIsModalDeleteAlertOpen] = useState(false);
+  const [isModalFindCityOpen, setIsModaFindCityOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -62,6 +65,11 @@ const DriveItemFormFirst = ({
   const toggleModalClientsList = () => {
     setIsModalClientsListOpen(!isModalClientsListOpen);
     document.getElementById("clientlistbtn").blur();
+  };
+
+  const toggleModalFindCity = () => {
+    setIsModaFindCityOpen(!isModalFindCityOpen);
+    document.getElementById("findcitybtn").blur();
   };
 
   const toggleModalDeleteAlert = () => {
@@ -213,6 +221,13 @@ const DriveItemFormFirst = ({
                     : "white"
                 }
               />
+              <FindCityBtn
+                id="findcitybtn"
+                type="button"
+                onClick={() => toggleModalFindCity()}
+              >
+                <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
+              </FindCityBtn>
             </FormItem>
             <FormItem>
               <Label>Arrival point</Label>
@@ -253,6 +268,15 @@ const DriveItemFormFirst = ({
         </BtnWrap>
       </form>
 
+      {isModalFindCityOpen && (
+        <ModalPort toggleModal={toggleModalFindCity}>
+          <ModalFindCity
+            toggleModal={toggleModalFindCity}
+            // onSelectClient={onSelectClient}
+          />
+        </ModalPort>
+      )}
+
       {isModalClientsListOpen && (
         <ModalPort toggleModal={toggleModalClientsList}>
           <ModalClientsList
@@ -264,7 +288,10 @@ const DriveItemFormFirst = ({
 
       {isModalDeleteAlertOpen && (
         <ModalPort toggleModal={toggleModalDeleteAlert}>
-          <ModalDeleteAlert toggleModal={toggleModalDeleteAlert} itemId={{driveId, clientId: null}} />
+          <ModalDeleteAlert
+            toggleModal={toggleModalDeleteAlert}
+            itemId={{ driveId, clientId: null }}
+          />
         </ModalPort>
       )}
     </FormWrap>

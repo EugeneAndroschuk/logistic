@@ -57,6 +57,20 @@ export const ClientListBtn = styled.button`
   }
 `;
 
+export const FindCityBtn = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 16px;
+
+  background-color: transparent;
+  border: none;
+
+  :hover,
+  :focus {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  }
+`;
+
 export const BtnWrap = styled.div`
   display: flex;
   gap: 16px;
