@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import ModalPort from "../../../shared/components/ModalPort/ModalPort";
 import ModalClientsList from "../../../shared/components/ModalClientsList/ModalClientsList";
 import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
-import ModalFindCity from "../../../shared/components/ModalFindCity/MadalFindCity";
+import ModalFindCity from "../../../shared/components/ModalFindCity/ModalFindCity";
 import {
   FormWrap,
   FormListWrap,
@@ -33,7 +33,8 @@ const DriveItemFormFirst = ({
 }) => {
   const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
   const [isModalDeleteAlertOpen, setIsModalDeleteAlertOpen] = useState(false);
-  const [isModalFindCityOpen, setIsModaFindCityOpen] = useState(false);
+  const [isModalFindCityDepartureOpen, setIsModaFindCityDepartureOpen] = useState(false);
+  const [isModalFindCityArrivalOpen, setIsModaFindCityArrivalOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -67,9 +68,14 @@ const DriveItemFormFirst = ({
     document.getElementById("clientlistbtn").blur();
   };
 
-  const toggleModalFindCity = () => {
-    setIsModaFindCityOpen(!isModalFindCityOpen);
-    document.getElementById("findcitybtn").blur();
+  const toggleModalFindCityDeparture = () => {
+    setIsModaFindCityDepartureOpen(!isModalFindCityDepartureOpen);
+    document.getElementById("findcitybtndep").blur();
+  };
+
+  const toggleModalFindCityArrival = () => {
+    setIsModaFindCityArrivalOpen(!isModalFindCityArrivalOpen);
+    document.getElementById("findcitybtnarr").blur();
   };
 
   const toggleModalDeleteAlert = () => {
@@ -79,6 +85,14 @@ const DriveItemFormFirst = ({
 
   const onSelectClient = (name) => {
     setValue("client", name);
+  };
+
+  const onFindCityDeparture = (city) => {
+    setValue("departurePoint", city);
+  }
+
+  const onFindCityArrival = (city) => {
+    setValue("arrivalPoint", city);
   };
 
   return (
@@ -222,9 +236,9 @@ const DriveItemFormFirst = ({
                 }
               />
               <FindCityBtn
-                id="findcitybtn"
+                id="findcitybtndep"
                 type="button"
-                onClick={() => toggleModalFindCity()}
+                onClick={() => toggleModalFindCityDeparture()}
               >
                 <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
               </FindCityBtn>
@@ -240,6 +254,13 @@ const DriveItemFormFirst = ({
                     : "white"
                 }
               />
+              <FindCityBtn
+                id="findcitybtnarr"
+                type="button"
+                onClick={() => toggleModalFindCityArrival()}
+              >
+                <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
+              </FindCityBtn>
             </FormItem>
             <FormItem>
               <Label>Vehicle data</Label>
@@ -268,11 +289,20 @@ const DriveItemFormFirst = ({
         </BtnWrap>
       </form>
 
-      {isModalFindCityOpen && (
-        <ModalPort toggleModal={toggleModalFindCity}>
+      {isModalFindCityDepartureOpen && (
+        <ModalPort toggleModal={toggleModalFindCityDeparture}>
           <ModalFindCity
-            toggleModal={toggleModalFindCity}
-            // onSelectClient={onSelectClient}
+            toggleModal={toggleModalFindCityDeparture}
+            onFindCity={onFindCityDeparture}
+          />
+        </ModalPort>
+      )}
+
+      {isModalFindCityArrivalOpen && (
+        <ModalPort toggleModal={toggleModalFindCityArrival}>
+          <ModalFindCity
+            toggleModal={toggleModalFindCityArrival}
+            onFindCity={onFindCityArrival}
           />
         </ModalPort>
       )}

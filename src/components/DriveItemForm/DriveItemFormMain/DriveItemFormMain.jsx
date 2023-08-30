@@ -88,13 +88,13 @@ const DriveItemFormMain = () => {
       <DriveFormName>Drive details</DriveFormName>
       <StepWrap>
         <StepList>
-          <StepItem isActive={step === 1 ? true : false}>
+          <StepItem $isActive={step === 1 ? true : false}>
             <StepName>Common info</StepName>
           </StepItem>
-          <StepItem isActive={step === 2 ? true : false}>
+          <StepItem $isActive={step === 2 ? true : false}>
             <StepName>Carrier info</StepName>
           </StepItem>
-          <StepItem isActive={step === 3 ? true : false}>
+          <StepItem $isActive={step === 3 ? true : false}>
             <StepName>Cost info</StepName>
           </StepItem>
         </StepList>

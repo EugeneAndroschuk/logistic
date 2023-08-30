@@ -42,7 +42,7 @@ export const StepItem = styled.li`
 
   font-weight: 700;
   color: ${(prop) =>
-    prop.isActive ? "rgb(219, 167, 22)" : "white"};
+    prop.$isActive ? "rgb(219, 167, 22)" : "white"};
   text-align: center;
 
   &::after {
@@ -55,7 +55,7 @@ export const StepItem = styled.li`
     height: 8px;
     border-radius: 8px;
     background-color: ${(prop) =>
-      prop.isActive ? "rgb(219, 167, 22)" : "rgba(239, 239, 239, 0.3)"};
+      prop.$isActive ? "rgb(219, 167, 22)" : "rgba(239, 239, 239, 0.3)"};
   }
 `;
 
