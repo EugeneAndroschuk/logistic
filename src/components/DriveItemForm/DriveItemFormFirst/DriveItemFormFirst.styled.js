@@ -129,3 +129,16 @@ export const DeleteBtn = styled.button`
     background-color: rgba(255, 255, 255, 0.8);
   }
 `;
+
+export const OpenMapWrap = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 48px;
+
+  cursor:pointer;
+
+  :hover,
+  :focus {
+    scale: 1.1;
+  }
+`;

@@ -55,7 +55,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   };
 
   const onSelectCity = (city) => {
-    onFindCity(`${city.name}, ${city.countrySign}`);
+    onFindCity(city);
     toggleModal();
   };
 

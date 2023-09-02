@@ -21,7 +21,9 @@ const routes = [
     path: "/",
     element: <PrivateRoute component={SharedLayout} />,
     children: [
-      { index: true, element: <PrivateRoute component={MainPage} /> },
+      {
+        index: true, element: <PrivateRoute component={MainPage} />,
+      },
       {
         path: "/drives",
         element: <PrivateRoute component={DrivesPage} />,

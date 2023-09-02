@@ -31,6 +31,7 @@ const MainPage = () => {
   const nodeRef = useRef(null);
   const LIMIT_PER_PAGE = 18;
 
+
   const pageQuantity = total ? Math.ceil(total / LIMIT_PER_PAGE) : 0;
 
   const theme = createTheme({
@@ -55,64 +56,63 @@ const MainPage = () => {
 
     let query = `page=${page}&limit=${LIMIT_PER_PAGE}`;
 
-    if (queryFilters) { query = query.concat(queryFilters); }
-    
+    if (queryFilters) {
+      query = query.concat(queryFilters);
+    }
+
     dispatch(getDrivesByQuery(query));
-    
-  },[dispatch, isLoggedIn, page, queryFilters])
+  }, [dispatch, isLoggedIn, page, queryFilters]);
 
   const toggleModal = () => {
     setIsMenuOpen(!isMenuOpen);
-  }
+  };
 
   const onSetQuery = (str) => {
     setQueryFilters(str);
     setPage(1);
   };
 
-    return (
-      <MainPageWrap>
-        <Container>
-          <DriveListWrap>
-            <DriveList />
-          </DriveListWrap>
-          <PaginationWrap>
-            <ThemeProvider theme={theme}>
-              {pageQuantity > 1 && (
-                <Pagination
-                  count={pageQuantity}
-                  page={page}
-                  onChange={(_, num) => setPage(num)}
-                  variant="outlined"
-                  shape="rounded"
-                />
-              )}
-            </ThemeProvider>
-          </PaginationWrap>
+  return (
+    <MainPageWrap>
+      <Container>
+        <DriveListWrap>
+          <DriveList />
+        </DriveListWrap>
+        <PaginationWrap>
+          <ThemeProvider theme={theme}>
+            {pageQuantity > 1 && (
+              <Pagination
+                count={pageQuantity}
+                page={page}
+                onChange={(_, num) => setPage(num)}
+                variant="outlined"
+                shape="rounded"
+              />
+            )}
+          </ThemeProvider>
+        </PaginationWrap>
 
-          <AddDriveBtn to="/drives/add">ADD DRIVE</AddDriveBtn>
-          <FilterMenuBtn id="filterbtn" type="button" onClick={toggleModal}>
-            FILTERS
-          </FilterMenuBtn>
+        <AddDriveBtn to="/drives/add">ADD DRIVE</AddDriveBtn>
+        <FilterMenuBtn id="filterbtn" type="button" onClick={toggleModal}>
+          FILTERS
+        </FilterMenuBtn>
 
-          {isMenuOpen && <Overlay toggleModal={toggleModal} />}
+        {isMenuOpen && <Overlay toggleModal={toggleModal} />}
 
-          <CSSTransition
-            nodeRef={nodeRef}
-            in={isMenuOpen}
-            classNames="fade"
-            timeout={250}
-            unmountOnExit
-          >
-            <MenuWrap ref={nodeRef}>
-              <FiltersMenu toggleModal={toggleModal} onSetQuery={onSetQuery} />
-            </MenuWrap>
-          </CSSTransition>
-
-          {/* {isMenuOpen && <FiltersMenu toggleModal={toggleModal} />} */}
-        </Container>
-      </MainPageWrap>
-    );
+        <CSSTransition
+          nodeRef={nodeRef}
+          in={isMenuOpen}
+          classNames="fade"
+          timeout={250}
+          unmountOnExit
+        >
+          <MenuWrap ref={nodeRef}>
+            <FiltersMenu toggleModal={toggleModal} onSetQuery={onSetQuery} />
+          </MenuWrap>
+        </CSSTransition>
+      </Container>
+    </MainPageWrap>
+  );
 }
 
 export default MainPage;

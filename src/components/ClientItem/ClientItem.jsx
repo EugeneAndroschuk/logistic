@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import cutItemNameLength from "../../utils/cutItemNameLength";
 import {
   ClientWrap,
   ClientLinkWrap,
@@ -17,10 +18,10 @@ const Client = ({ client }) => {
             <ClientName>{client.code}</ClientName>
           </ClientItem>
           <ClientItem>
-            <ClientName>{client.name}</ClientName>
+            <ClientName>{cutItemNameLength(client.name, 50)}</ClientName>
           </ClientItem>
           <ClientItem>
-            <ClientName>{client.comments}</ClientName>
+            <ClientName>{cutItemNameLength(client.comments, 40)}</ClientName>
           </ClientItem>
         </ClientList>
       </ClientLinkWrap>

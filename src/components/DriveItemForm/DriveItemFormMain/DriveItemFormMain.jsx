@@ -42,7 +42,7 @@ const DriveItemFormMain = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (allDrives.length === 1) {
+    if (allDrives.length === 1 && driveId) {
       const newObj = {};
       const keys = Object.keys(allDrives[0]);
       keys.forEach((key) => {
@@ -50,7 +50,7 @@ const DriveItemFormMain = () => {
       });
       setFormData({ ...newObj });
     }
-  }, [allDrives]);
+  }, [allDrives, driveId]);
 
   useEffect(() => {
     if (isUpdateSuccessful) {

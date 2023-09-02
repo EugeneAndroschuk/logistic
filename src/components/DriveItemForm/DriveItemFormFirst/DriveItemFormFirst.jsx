@@ -4,6 +4,8 @@ import { useForm, Controller } from "react-hook-form";
 import { setDateForQuerySearch } from "../../../utils/dateFormatter";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import RoomIcon from "@mui/icons-material/Room";
+import isObjectEmpty from "../../../utils/emptyObjectTest";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,6 +13,7 @@ import dayjs from "dayjs";
 import ModalPort from "../../../shared/components/ModalPort/ModalPort";
 import ModalClientsList from "../../../shared/components/ModalClientsList/ModalClientsList";
 import ModalDeleteAlert from "../../../shared/components/ModalDeleteAlert/ModalDeleteAlert";
+import ModalMap from "../../../shared/components/ModalMap/ModalMap";
 import ModalFindCity from "../../../shared/components/ModalFindCity/ModalFindCity";
 import {
   FormWrap,
@@ -23,6 +26,7 @@ import {
   BtnWrap,
   SubmitFormBtn,
   DeleteBtn,
+  OpenMapWrap,
 } from "./DriveItemFormFirst.styled";
 
 const DriveItemFormFirst = ({
@@ -33,8 +37,15 @@ const DriveItemFormFirst = ({
 }) => {
   const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
   const [isModalDeleteAlertOpen, setIsModalDeleteAlertOpen] = useState(false);
-  const [isModalFindCityDepartureOpen, setIsModaFindCityDepartureOpen] = useState(false);
-  const [isModalFindCityArrivalOpen, setIsModaFindCityArrivalOpen] = useState(false);
+  const [isModalMapOpen, setIsModalMapOpen] = useState(false);
+  const [isModalFindCityDepartureOpen, setIsModaFindCityDepartureOpen] =
+    useState(false);
+  const [isModalFindCityArrivalOpen, setIsModaFindCityArrivalOpen] =
+    useState(false);
+  const [cityDepartureCoords, setCityDepartureCoords] = useState({
+    lat: null,
+    lng: null,
+  });
   const {
     register,
     handleSubmit,
@@ -44,28 +55,46 @@ const DriveItemFormFirst = ({
   } = useForm();
 
   useEffect(() => {
-    if (drive) {
+    if (!isObjectEmpty(drive)) {
       setValue("shipmentDate", dayjs(drive.shipmentDate));
       setValue("unloadingDate", dayjs(drive.unloadingDate));
       setValue("carrier", drive.carrier);
       setValue("client", drive.client);
-      setValue("departurePoint", drive.departurePoint);
+      setValue("departurePoint", drive.departurePoint.name);
       setValue("arrivalPoint", drive.arrivalPoint);
       setValue("vehicleData", drive.vehicleData);
+
+      setCityDepartureCoords({
+        lat: drive.departurePoint.lat,
+        lng: drive.departurePoint.lng,
+      });
+    } else {
+      setValue("shipmentDate", dayjs(new Date()));
+      setValue("unloadingDate", dayjs(new Date()));
     }
   }, [drive, setValue]);
 
   const onFormSubmit = (data) => {
+    console.log(data);
     onSetFirstStep({
       ...data,
       shipmentDate: setDateForQuerySearch(data.shipmentDate),
       unloadingDate: setDateForQuerySearch(data.unloadingDate),
+      departurePoint: {
+        name: data.departurePoint,
+        lat: cityDepartureCoords.lat,
+        lng: cityDepartureCoords.lng,
+      },
     });
   };
 
   const toggleModalClientsList = () => {
     setIsModalClientsListOpen(!isModalClientsListOpen);
     document.getElementById("clientlistbtn").blur();
+  };
+
+  const toggleModalMap = () => {
+    setIsModalMapOpen(!isModalMapOpen);
   };
 
   const toggleModalFindCityDeparture = () => {
@@ -88,11 +117,12 @@ const DriveItemFormFirst = ({
   };
 
   const onFindCityDeparture = (city) => {
-    setValue("departurePoint", city);
-  }
+    setValue("departurePoint", `${city.name}, ${city.countrySign}`);
+    setCityDepartureCoords({ lat: city.lat, lng: city.lon });
+  };
 
   const onFindCityArrival = (city) => {
-    setValue("arrivalPoint", city);
+    setValue("arrivalPoint", `${city.name}, ${city.countrySign}`);
   };
 
   return (
@@ -242,7 +272,11 @@ const DriveItemFormFirst = ({
               >
                 <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
               </FindCityBtn>
+              <OpenMapWrap onClick={toggleModalMap}>
+                <RoomIcon sx={{ color: "rgb(219, 167, 22)" }} />
+              </OpenMapWrap>
             </FormItem>
+
             <FormItem>
               <Label>Arrival point</Label>
               <Input
@@ -288,6 +322,12 @@ const DriveItemFormFirst = ({
           <SubmitFormBtn type="submit">Next</SubmitFormBtn>
         </BtnWrap>
       </form>
+
+      {isModalMapOpen && (
+        <ModalPort toggleModal={toggleModalMap}>
+          <ModalMap toggleModal={toggleModalMap} center={cityDepartureCoords} />
+        </ModalPort>
+      )}
 
       {isModalFindCityDepartureOpen && (
         <ModalPort toggleModal={toggleModalFindCityDeparture}>

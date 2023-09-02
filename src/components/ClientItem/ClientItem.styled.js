@@ -13,7 +13,7 @@ export const ClientLinkWrap = styled(Link)`
     // cursor: pointer;
     font-weight: 700;
     color: black;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(219, 167, 22);
   }
 `;
 
