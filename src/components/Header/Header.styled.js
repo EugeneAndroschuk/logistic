@@ -48,3 +48,8 @@ export const NavLinkStyled = styled(NavLink)`
     }
   }
 `;
+
+export const UserWrap = styled.div`
+display: flex;
+gap: 32px;
+`;

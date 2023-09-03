@@ -1,0 +1,8 @@
+{
+  "components": {
+    "Header": {
+      "LinkToMain": "Головна",
+      "LinkToClients": "Клієнти"
+    }
+  }
+}
