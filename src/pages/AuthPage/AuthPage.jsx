@@ -19,10 +19,8 @@ const AuthPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('срабатывает эффект')
     
     if (token) {
-      console.log(token);
       dispatch(setToken({ token }));
       dispatch(googleAuth(token));
     }
