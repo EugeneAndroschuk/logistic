@@ -20,11 +20,13 @@ import PrivateRoute from "./pages/routes/PrivateRoute";
 const routes = [
   {
     path: "/",
-    element: <PrivateRoute component={SharedLayout} />,
+    element: <SharedLayout />,
+    // element: <PrivateRoute component={SharedLayout} />,
     children: [
       {
         index: true,
-        element: <PrivateRoute component={MainPage} />,
+        element: <MainPage/>,
+        // element: <PrivateRoute component={MainPage} />,
       },
       {
         path: "/drives",
@@ -76,7 +78,7 @@ const routes = [
       },
     ],
   },
-  { path: "/googleauth", element: <GoogleAuth/> },
+  { path: "/googleauth", element: <GoogleAuth /> },
 ];
 
 function App() {
