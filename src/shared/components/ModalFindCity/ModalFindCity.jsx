@@ -13,8 +13,10 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const [value, setValue] = useState("");
   const [cities, setCities] = useState([]);
   const token = useSelector(getUserToken);
-  const controller = new AbortController();
+  // const controller = new AbortController();
   const signal = controller.signal;
+  const LOCALHOST_URL = "http://localhost:3000";
+  const DEPLOY_URL = "http://logistic-seven.vercel.app/";
 
   const debouncedSearch = useDebounce((value)=>setSearch(value), 1000);
 
@@ -27,7 +29,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
     const lardiTransFetch = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/drives/findcity?city=${search}`,
+          `${DEPLOY_URL}/api/drives/findcity?city=${search}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             signal,
