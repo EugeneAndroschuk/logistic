@@ -60,6 +60,7 @@ const MainPage = () => {
 
   useEffect(() => {
     console.log("срабатывает эффект");
+    console.log(token)
 
     if (token) {
       console.log(token);
