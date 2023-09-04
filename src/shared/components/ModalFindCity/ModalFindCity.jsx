@@ -16,7 +16,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   // const controller = new AbortController();
   // const signal = controller.signal;
   const LOCALHOST_URL = "http://localhost:3000";
-  const DEPLOY_URL = "http://logistic-seven.vercel.app/";
+  const DEPLOY_URL = "https://logistics-db.onrender.com";
 
   const debouncedSearch = useDebounce((value)=>setSearch(value), 1000);
 
