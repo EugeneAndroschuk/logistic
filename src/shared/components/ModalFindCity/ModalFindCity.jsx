@@ -14,7 +14,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const [cities, setCities] = useState([]);
   const token = useSelector(getUserToken);
   // const controller = new AbortController();
-  const signal = controller.signal;
+  // const signal = controller.signal;
   const LOCALHOST_URL = "http://localhost:3000";
   const DEPLOY_URL = "http://logistic-seven.vercel.app/";
 
