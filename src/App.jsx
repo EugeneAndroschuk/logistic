@@ -20,13 +20,11 @@ import PrivateRoute from "./pages/routes/PrivateRoute";
 const routes = [
   {
     path: "/",
-    element: <SharedLayout />,
-    // element: <PrivateRoute component={SharedLayout} />,
+    element: <PrivateRoute component={SharedLayout} />,
     children: [
       {
         index: true,
-        element: <MainPage/>,
-        // element: <PrivateRoute component={MainPage} />,
+        element: <PrivateRoute component={MainPage} />,
       },
       {
         path: "/drives",
