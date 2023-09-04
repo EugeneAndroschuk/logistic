@@ -1,9 +1,6 @@
 
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { googleAuth } from "../../redux/auth/authThunks";
-import { setToken } from "../../redux/auth/authSlice";
 import { CSSTransition } from "react-transition-group";
 import { getUserIsLoggedIn } from "../../redux/auth/authSelectors";
 import { getAllDrivesSelector } from "../../redux/drives/drivesSelectors";
@@ -33,12 +30,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const nodeRef = useRef(null);
   const LIMIT_PER_PAGE = 18;
-  const [searchParams] = useSearchParams();
-  const params = useMemo(
-    () => Object.fromEntries([...searchParams]),
-    [searchParams]
-  );
-  const { token } = params;
+
   const pageQuantity = total ? Math.ceil(total / LIMIT_PER_PAGE) : 0;
 
   const theme = createTheme({
@@ -57,17 +49,6 @@ const MainPage = () => {
       },
     },
   });
-
-  useEffect(() => {
-    console.log("срабатывает эффект");
-    console.log(token)
-
-    if (token) {
-      console.log(token);
-      dispatch(setToken({ token }));
-      dispatch(googleAuth(token));
-    }
-  }, [dispatch, token]);
 
   useEffect(() => {
     if (!isLoggedIn) return;

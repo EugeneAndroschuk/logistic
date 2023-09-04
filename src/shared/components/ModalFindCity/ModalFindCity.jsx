@@ -35,6 +35,8 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
             signal,
           }
         );
+
+        console.log(response);
         setCities([...response.data]);
       } catch (e) {
         if (!signal?.aborted) {

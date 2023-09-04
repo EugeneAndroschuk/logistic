@@ -12,7 +12,6 @@ import ClientItemForm from "./components/ClientItemForm/ClientItemForm";
 import ClientsList from "./components/ClientsList/ClientsList";
 import LoginForm from "./components/LoginForm/LoginForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
-import GoogleAuth from "./components/GoogleAuth/GoogleAuth";
 
 import RestrictedRoute from "./pages/routes/RestrictedRoute";
 import PrivateRoute from "./pages/routes/PrivateRoute";
@@ -75,8 +74,7 @@ const routes = [
         element: <RestrictedRoute component={LoginForm} />,
       },
     ],
-  },
-  { path: "/googleauth", element: <GoogleAuth /> },
+  }
 ];
 
 function App() {
