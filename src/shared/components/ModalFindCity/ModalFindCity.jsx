@@ -38,7 +38,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
           client_secret: import.meta.env.VITE_AMADEUS_API_SECRET,
         },
       }
-    ).then(res=>console.log(res));
+    ).then(res=>console.log(res.data.access_token));
 
   },[isAmadeusTokenExpired]);
 
