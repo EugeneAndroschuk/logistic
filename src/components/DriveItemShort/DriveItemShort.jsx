@@ -41,7 +41,7 @@ const Drive = ({ drive }) => {
             </DriveName>
           </DriveItem>
           <DriveItem>
-            <DriveName>{cutItemNameLength(drive.arrivalPoint, 15)}</DriveName>
+            <DriveName>{cutItemNameLength(drive.arrivalPoint.name, 15)}</DriveName>
           </DriveItem>
           <DriveItem>
             <DriveName>{cutItemNameLength(drive.vehicleData, 15)}</DriveName>
