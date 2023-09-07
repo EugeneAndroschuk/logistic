@@ -31,7 +31,6 @@ const RegisterForm = () => {
     
     const onSubmitForm = (data) => {
         const { name, email, password, role } = data;
-        console.log(data);
         dispatch(userRegister({ name, email, password, role }));
     }
 

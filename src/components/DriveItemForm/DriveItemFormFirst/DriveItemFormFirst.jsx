@@ -46,6 +46,10 @@ const DriveItemFormFirst = ({
     lat: null,
     lng: null,
   });
+  const [cityArrivalCoords, setCityArrivalCoords] = useState({
+    lat: null,
+    lng: null,
+  });
   const {
     register,
     handleSubmit,
@@ -123,6 +127,10 @@ const DriveItemFormFirst = ({
 
   const onFindCityArrival = (city) => {
     setValue("arrivalPoint", `${city.name}, ${city.address.countryCode}`);
+    setCityArrivalCoords({
+      lat: city.geoCode.latitude,
+      lng: city.geoCode.longitude,
+    });
   };
 
   return (
@@ -295,6 +303,9 @@ const DriveItemFormFirst = ({
               >
                 <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
               </FindCityBtn>
+              <OpenMapWrap onClick={toggleModalMap}>
+                <RoomIcon sx={{ color: "rgb(219, 167, 22)" }} />
+              </OpenMapWrap>
             </FormItem>
             <FormItem>
               <Label>Vehicle data</Label>

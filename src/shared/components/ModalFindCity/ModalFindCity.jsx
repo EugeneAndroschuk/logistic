@@ -14,13 +14,6 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const [cities, setCities] = useState([]);
   const [isAmadeusTokenExpired, setIsAmadeusTokenExpired] = useState(true);
   const [amadeusToken, setAmadeusToken] = useState("");
-  const token = useSelector(getUserToken);
-  // const tokenApi = import.meta.env.VITE_AMADEUS_API_TOKEN;
-  // const controller = new AbortController();
-  // const signal = controller.signal;
-  const LOCALHOST_URL = "http://localhost:3000";
-  const DEPLOY_URL = "https://logistics-db.onrender.com";
-
   const debouncedSearch = useDebounce((value) => setSearch(value), 1100);
 
   useEffect(() => {
@@ -35,9 +28,13 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
         client_id: import.meta.env.VITE_AMADEUS_API_KEY,
         client_secret: import.meta.env.VITE_AMADEUS_API_SECRET,
       },
-    }).then((res) => { setAmadeusToken(res.data.access_token); setIsAmadeusTokenExpired(false); });
-
-  },[isAmadeusTokenExpired]);
+    })
+      .then((res) => {
+        setAmadeusToken(res.data.access_token);
+        setIsAmadeusTokenExpired(false);
+      })
+      .catch((e) => console.log(e));
+  }, [isAmadeusTokenExpired]);
 
   useEffect(() => {
     if (search === "" || amadeusToken === "") return;
@@ -64,23 +61,6 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
         }
       }
     };
-
-    // const lardiTransFetch = async () => {
-    //   try {
-    //     // const response = await axios.get(
-    //     //   `${DEPLOY_URL}/api/drives/findcity?city=${search}`,
-    //     //   {
-    //     //     headers: { Authorization: `Bearer ${token}` },
-    //     //     signal,
-    //     //   }
-    //     // );
-    //   } catch (e) {
-    //     if (!signal?.aborted) {
-    //       const errorCode = e.response.data.errors[0].code;
-    //       if (errorCode === 38192) setIsAmadeusTokenExpired(true);
-    //     }
-    //   }
-    // };
 
     findCity();
 
