@@ -90,7 +90,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
     return () => {
       controller.abort();
     };
-  }, [search, tokenApi]);
+  }, [amadeusToken, search]);
 
   const onHandleInput = (e) => {
     setValue(e.target.value);
