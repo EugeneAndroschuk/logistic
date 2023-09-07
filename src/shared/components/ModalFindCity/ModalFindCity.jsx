@@ -12,10 +12,10 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("");
   const [cities, setCities] = useState([]);
-  const [isAmadeusTokenExpired, setIsAmadeusTokenExpired] = useState(false);
+  const [isAmadeusTokenExpired, setIsAmadeusTokenExpired] = useState(true);
   const [amadeusToken, setAmadeusToken] = useState("");
   const token = useSelector(getUserToken);
-  const tokenApi = import.meta.env.VITE_AMADEUS_API_TOKEN;
+  // const tokenApi = import.meta.env.VITE_AMADEUS_API_TOKEN;
   // const controller = new AbortController();
   // const signal = controller.signal;
   const LOCALHOST_URL = "http://localhost:3000";
