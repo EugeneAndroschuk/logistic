@@ -66,7 +66,7 @@ const DriveItemFormFirst = ({
       setValue("carrier", drive.carrier);
       setValue("client", drive.client);
       setValue("departurePoint", drive.departurePoint.name);
-      setValue("arrivalPoint", drive.arrivalPoint);
+      setValue("arrivalPoint", drive.arrivalPoint.name);
       setValue("vehicleData", drive.vehicleData);
 
       setCityDepartureCoords({
@@ -89,6 +89,11 @@ const DriveItemFormFirst = ({
         name: data.departurePoint,
         lat: cityDepartureCoords.lat,
         lng: cityDepartureCoords.lng,
+      },
+      arrivalPoint: {
+        name: data.arrivalPoint,
+        lat: cityArrivalCoords.lat,
+        lng: cityArrivalCoords.lng,
       },
     });
   };
