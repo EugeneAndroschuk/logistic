@@ -12,7 +12,8 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("");
   const [cities, setCities] = useState([]);
-  const [isAmadeusTokenExpired, setIsAmadeusTokenExpired] = useState(true);
+  const [isAmadeusTokenExpired, setIsAmadeusTokenExpired] = useState(false);
+  const [amadeusToken, setAmadeusToken] = useState("");
   const token = useSelector(getUserToken);
   const tokenApi = import.meta.env.VITE_AMADEUS_API_TOKEN;
   // const controller = new AbortController();
@@ -25,25 +26,21 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   useEffect(() => {
     if (!isAmadeusTokenExpired) return;
 
-    console.log("sending request==========")
-
-    axios(
-      {
-        method: "POST",
-        url: "https://test.api.amadeus.com/v1/security/oauth2/token",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        data: {
-          grant_type: "client_credentials",
-          client_id: import.meta.env.VITE_AMADEUS_API_KEY,
-          client_secret: import.meta.env.VITE_AMADEUS_API_SECRET,
-        },
-      }
-    ).then(res=>console.log(res.data.access_token));
+    axios({
+      method: "POST",
+      url: "https://test.api.amadeus.com/v1/security/oauth2/token",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: {
+        grant_type: "client_credentials",
+        client_id: import.meta.env.VITE_AMADEUS_API_KEY,
+        client_secret: import.meta.env.VITE_AMADEUS_API_SECRET,
+      },
+    }).then((res) => { setAmadeusToken(res.data.access_token); setIsAmadeusTokenExpired(false); });
 
   },[isAmadeusTokenExpired]);
 
   useEffect(() => {
-    if (search === "") return;
+    if (search === "" || amadeusToken === "") return;
 
     const controller = new AbortController();
     const signal = controller.signal;
@@ -53,7 +50,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
         const response = await axios.get(
           `https://test.api.amadeus.com/v1//reference-data/locations/cities?keyword=${search}&max=10`,
           {
-            headers: { Authorization: `Bearer ${tokenApi}` },
+            headers: { Authorization: `Bearer ${amadeusToken}` },
             signal,
           }
         );
