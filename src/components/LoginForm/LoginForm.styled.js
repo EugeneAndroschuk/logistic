@@ -5,7 +5,7 @@ import googleImg from "../../assets/images/google.png";
 export const FormWrap = styled.div`
 height: 100%;
 display: flex;
-justify-content: centr;
+justify-content: center;
 align-items: center;
 `;
 
