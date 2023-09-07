@@ -25,7 +25,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   useEffect(() => {
     if (!isAmadeusTokenExpired) return;
 
-    console.log("sending request=========")
+    console.log("sending request==========")
 
     axios(
       {
