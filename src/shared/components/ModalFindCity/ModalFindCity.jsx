@@ -55,9 +55,6 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
           }
         );
 
-        console.log("==code==", response.data.errors[0].code);
-        console.log("==title==", response.data.errors[0].title);
-
         const citiesArray = response.data.data;
         setCities([...citiesArray]);
       } catch (e) {
