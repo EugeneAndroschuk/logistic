@@ -37,7 +37,8 @@ const DriveItemFormFirst = ({
 }) => {
   const [isModalClientsListOpen, setIsModalClientsListOpen] = useState(false);
   const [isModalDeleteAlertOpen, setIsModalDeleteAlertOpen] = useState(false);
-  const [isModalMapOpen, setIsModalMapOpen] = useState(false);
+  const [isModalMapDepartureOpen, setIsModalMapDepartureOpen] = useState(false);
+  const [isModalMapArrivalOpen, setIsModalMapArrivalOpen] = useState(false);
   const [isModalFindCityDepartureOpen, setIsModaFindCityDepartureOpen] =
     useState(false);
   const [isModalFindCityArrivalOpen, setIsModaFindCityArrivalOpen] =
@@ -97,8 +98,12 @@ const DriveItemFormFirst = ({
     document.getElementById("clientlistbtn").blur();
   };
 
-  const toggleModalMap = () => {
-    setIsModalMapOpen(!isModalMapOpen);
+  const toggleModalMapDeparture = () => {
+    setIsModalMapDepartureOpen(!isModalMapDepartureOpen);
+  };
+
+  const toggleModalMapArrival = () => {
+    setIsModalMapArrivalOpen(!isModalMapArrivalOpen);
   };
 
   const toggleModalFindCityDeparture = () => {
@@ -280,7 +285,7 @@ const DriveItemFormFirst = ({
               >
                 <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
               </FindCityBtn>
-              <OpenMapWrap onClick={toggleModalMap}>
+              <OpenMapWrap onClick={toggleModalMapDeparture}>
                 <RoomIcon sx={{ color: "rgb(219, 167, 22)" }} />
               </OpenMapWrap>
             </FormItem>
@@ -303,7 +308,7 @@ const DriveItemFormFirst = ({
               >
                 <MoreHorizIcon sx={{ color: "black", borderRadius: "5px" }} />
               </FindCityBtn>
-              <OpenMapWrap onClick={toggleModalMap}>
+              <OpenMapWrap onClick={toggleModalMapArrival}>
                 <RoomIcon sx={{ color: "rgb(219, 167, 22)" }} />
               </OpenMapWrap>
             </FormItem>
@@ -334,9 +339,21 @@ const DriveItemFormFirst = ({
         </BtnWrap>
       </form>
 
-      {isModalMapOpen && (
-        <ModalPort toggleModal={toggleModalMap}>
-          <ModalMap toggleModal={toggleModalMap} center={cityDepartureCoords} />
+      {isModalMapDepartureOpen && (
+        <ModalPort toggleModal={toggleModalMapDeparture}>
+          <ModalMap
+            toggleModal={toggleModalMapDeparture}
+            center={cityDepartureCoords}
+          />
+        </ModalPort>
+      )}
+
+      {isModalMapArrivalOpen && (
+        <ModalPort toggleModal={toggleModalMapArrival}>
+          <ModalMap
+            toggleModal={toggleModalMapArrival}
+            center={cityArrivalCoords}
+          />
         </ModalPort>
       )}
 
