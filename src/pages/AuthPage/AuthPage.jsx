@@ -5,7 +5,7 @@ import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { googleAuth } from "../../redux/auth/authThunks";
 import { setToken } from "../../redux/auth/authSlice";
-import Loader from "src/components/Loader/Loader";
+import Loader from "../../components/Loader/Loader";
 import { getUserIsRefreshing } from "../../redux/auth/authSelectors";
 import { AuthPageWrap } from "./AuthPage.styled";
 
