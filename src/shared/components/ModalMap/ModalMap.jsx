@@ -7,7 +7,6 @@ import {
 } from "./ModalMap.styled";
 
 const ModalMap = ({ toggleModal, center }) => {
-  console.log(center)
 
   return (
     <ModalWrap>

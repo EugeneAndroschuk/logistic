@@ -73,6 +73,10 @@ const DriveItemFormFirst = ({
         lat: drive.departurePoint.lat,
         lng: drive.departurePoint.lng,
       });
+      setCityArrivalCoords({
+        lat: drive.arrivalPoint.lat,
+        lng: drive.arrivalPoint.lng,
+      });
     } else {
       setValue("shipmentDate", dayjs(new Date()));
       setValue("unloadingDate", dayjs(new Date()));
