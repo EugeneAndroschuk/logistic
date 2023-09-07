@@ -18,7 +18,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const LOCALHOST_URL = "http://localhost:3000";
   const DEPLOY_URL = "https://logistics-db.onrender.com";
 
-  const debouncedSearch = useDebounce((value)=>setSearch(value), 1000);
+  const debouncedSearch = useDebounce((value)=>setSearch(value), 1100);
 
   useEffect(() => {
     if (search === "") return;
@@ -28,16 +28,24 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
 
     const lardiTransFetch = async () => {
       try {
+        // const response = await axios.get(
+        //   `${DEPLOY_URL}/api/drives/findcity?city=${search}`,
+        //   {
+        //     headers: { Authorization: `Bearer ${token}` },
+        //     signal,
+        //   }
+        // );
+
         const response = await axios.get(
-          `${DEPLOY_URL}/api/drives/findcity?city=${search}`,
+          `https://test.api.amadeus.com/v1//reference-data/locations/cities?keyword=${search}&max=10`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: import.meta.env.VITE_AMADEUS_API_KEY },
             signal,
           }
         );
 
         console.log(response);
-        setCities([...response.data]);
+        // setCities([...response.data]);
       } catch (e) {
         if (!signal?.aborted) {
           console.error(e);
