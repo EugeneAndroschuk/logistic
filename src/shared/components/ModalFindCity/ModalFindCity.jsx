@@ -45,7 +45,8 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
           }
         );
 
-        console.log();
+        console.log("==code==", response.data.errors[0].code);
+        console.log("==title==", response.data.errors[0].title);
 
         const citiesArray = response.data.data;
         setCities([...citiesArray]);
@@ -90,7 +91,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
         <SearchInput
           value={value}
           onChange={onHandleInput}
-          placeholder={"Enter the name of city"}
+          placeholder={"enter the name of city in ENGLISH"}
         />
 
         <CityList cities={cities} onSelectCity={onSelectCity} />
