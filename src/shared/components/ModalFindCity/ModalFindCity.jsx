@@ -13,6 +13,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
   const [value, setValue] = useState("");
   const [cities, setCities] = useState([]);
   const token = useSelector(getUserToken);
+  const tokenApi = import.meta.env.VITE_AMADEUS_API_TOKEN;
   // const controller = new AbortController();
   // const signal = controller.signal;
   const LOCALHOST_URL = "http://localhost:3000";
@@ -39,7 +40,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
         const response = await axios.get(
           `https://test.api.amadeus.com/v1//reference-data/locations/cities?keyword=${search}&max=10`,
           {
-            headers: { Authorization: import.meta.env.VITE_AMADEUS_API_KEY },
+            headers: { Authorization: `Bearer ${tokenApi}` },
             signal,
           }
         );
