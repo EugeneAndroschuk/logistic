@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { nanoid } from "nanoid";
 import CityItem from "../CityItem/CityItem";
 import { CityListWrap, CityItemStyled } from "./CityList.styled";
 
@@ -9,7 +10,7 @@ const CityList = ({ cities, onSelectCity }) => {
       <ul>
         {cities.length > 0 &&
           cities.map((city) => (
-            <CityItemStyled key={city.id} onClick={() => onSelectCity(city)}>
+            <CityItemStyled key={nanoid()} onClick={() => onSelectCity(city)}>
               <CityItem city={city} />
             </CityItemStyled>
           ))}

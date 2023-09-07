@@ -45,8 +45,8 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
           }
         );
 
-        console.log(response.data.data);
-        // setCities([...response.data]);
+        const citiesArray = response.data.data;
+        setCities([...citiesArray]);
       } catch (e) {
         if (!signal?.aborted) {
           console.error(e);
@@ -60,7 +60,7 @@ const ModalFindCity = ({ toggleModal, onFindCity }) => {
       controller.abort();
     };
 
-  },[search, token]);
+  },[search, token, tokenApi]);
 
   const onHandleInput = (e) => {
     setValue(e.target.value);

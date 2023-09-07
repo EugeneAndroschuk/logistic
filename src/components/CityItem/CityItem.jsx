@@ -6,7 +6,7 @@ const CityItem = ({ city }) => {
     return (
       <div>
         <CityItemName>
-          {city.name}, {city.countrySign}
+          {city.name}, {city.address.countryCode}
         </CityItemName>
       </div>
     );

@@ -117,12 +117,12 @@ const DriveItemFormFirst = ({
   };
 
   const onFindCityDeparture = (city) => {
-    setValue("departurePoint", `${city.name}, ${city.countrySign}`);
-    setCityDepartureCoords({ lat: city.lat, lng: city.lon });
+    setValue("departurePoint", `${city.name}, ${city.address.countryCode}`);
+    setCityDepartureCoords({ lat: city.geoCode.latitude, lng: city.geoCode.longitude });
   };
 
   const onFindCityArrival = (city) => {
-    setValue("arrivalPoint", `${city.name}, ${city.countrySign}`);
+    setValue("arrivalPoint", `${city.name}, ${city.address.countryCode}`);
   };
 
   return (
