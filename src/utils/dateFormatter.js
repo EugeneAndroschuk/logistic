@@ -4,6 +4,7 @@ export const getDateFromUtc = (dateUtc) => {
   const dateToLocale = fullDate.toLocaleString();
   const date = dateToLocale.split(",")[0];
   const arr = date.split("/");
+  console.log(arr)
 
   // let day = " ";
   // let month = " ";
