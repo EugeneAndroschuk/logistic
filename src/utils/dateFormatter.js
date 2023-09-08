@@ -3,9 +3,7 @@ export const getDateFromUtc = (dateUtc) => {
   const fullDate = new Date(dateUtc);
   const dateToLocale = fullDate.toLocaleString();
   const date = dateToLocale.split(",")[0];
-  console.log(date)
-  const arr = date.split("/");
-  console.log(arr)
+  // const arr = date.split("/");
 
   // let day = " ";
   // let month = " ";
@@ -15,11 +13,13 @@ export const getDateFromUtc = (dateUtc) => {
 
   // if (arr[0].length === 1) month = "0" + arr[0];
   // else month = arr[0];
-  const day = arr[1];
-  const month = arr[0];
-  const year = arr[2];
+  // const day = arr[1];
+  // const month = arr[0];
+  // const year = arr[2];
 
-  return [day, month, year].join(".");
+  // return [day, month, year].join(".");
+
+  return date;
 };
 
 export const setDateForBackend = (str) => {
