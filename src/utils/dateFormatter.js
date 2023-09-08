@@ -3,6 +3,7 @@ export const getDateFromUtc = (dateUtc) => {
   const fullDate = new Date(dateUtc);
   const dateToLocale = fullDate.toLocaleString();
   const date = dateToLocale.split(",")[0];
+  console.log(date)
   const arr = date.split("/");
   console.log(arr)
 
