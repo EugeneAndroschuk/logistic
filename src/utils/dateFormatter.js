@@ -5,8 +5,11 @@ export const getDateFromUtc = (dateUtc) => {
   const date = dateToLocale.split(",")[0];
   const arr = date.split("/");
 
-  const day = arr[1].padStart(2, 0);
-  const month = arr[0].padStart(2, 0);
+  // const day = arr[1].padStart(2, 0);
+  // const month = arr[0].padStart(2, 0);
+const day = arr[1].padStart(2, 0);
+const month = arr[0].padStart(2, 0);
+
   const year = arr[2];
 
   return [day, month, year].join(".");
