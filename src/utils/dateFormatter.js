@@ -5,10 +5,14 @@ export const getDateFromUtc = (dateUtc) => {
   const date = dateToLocale.split(",")[0];
   const arr = date.split("/");
 
-  // const day = arr[1].padStart(2, 0);
-  // const month = arr[0].padStart(2, 0);
-const day = arr[1];
-const month = arr[0];
+  let day;
+  let month;
+
+  if (arr[1].length === 1) day = `0` + arr[1];
+  else day = arr[1];
+
+  if (arr[0].length === 1) month = `0` + arr[0];
+  else month = arr[0];
 
   const year = arr[2];
 
