@@ -7,8 +7,8 @@ export const getDateFromUtc = (dateUtc) => {
 
   // const day = arr[1].padStart(2, 0);
   // const month = arr[0].padStart(2, 0);
-const day = arr[1].padStart(2, 0);
-const month = arr[0].padStart(2, 0);
+const day = arr[1];
+const month = arr[0];
 
   const year = arr[2];
 
