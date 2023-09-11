@@ -2,10 +2,11 @@
 export const getDateFromUtc = (dateUtc) => {
   const fullDate = new Date(dateUtc);
   const dateToLocale = fullDate.toLocaleString();
-
+  
+console.log(dateUtc);
   console.log(fullDate.toLocaleString());
   console.log(fullDate.toString());
-  
+
   const date = dateToLocale.split(",")[0];
   // const arr = date.split("/");
 
